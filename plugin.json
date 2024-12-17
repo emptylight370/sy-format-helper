@@ -1,9 +1,9 @@
 {
-  "name": "plugin-sample",
-  "author": "Vanessa",
-  "url": "https://github.com/siyuan-note/plugin-sample",
-  "version": "0.3.7",
-  "minAppVersion": "3.1.11",
+  "name": "sy-format-helper",
+  "author": "Emptylight",
+  "url": "https://github.com/emptylight370/sy-format-helper",
+  "version": "0.0.1",
+  "minAppVersion": "2.0.25",
   "backends": [
     "windows",
     "linux",
@@ -15,18 +15,16 @@
   ],
   "frontends": [
     "desktop",
-    "mobile",
     "browser-desktop",
-    "browser-mobile",
     "desktop-window"
   ],
   "displayName": {
-    "default": "Plugin Sample",
-    "zh_CN": "插件示例"
+    "default": "Format Helper",
+    "zh_CN": "格式助手"
   },
   "description": {
-    "default": "This is a plugin sample",
-    "zh_CN": "这是一个插件示例"
+    "default": "Format the text block",
+    "zh_CN": "格式化文本块"
   },
   "readme": {
     "default": "README.md",
@@ -37,11 +35,12 @@
     "patreon": "",
     "github": "",
     "custom": [
-      "https://ld246.com/sponsor"
+      "https://afdian.com/a/tingyuting"
     ]
   },
   "keywords": [
-    "sample",
-    "示例"
+    "format",
+    "格式",
+    "Emptylight"
   ]
 }
