@@ -150,6 +150,7 @@ export default class FormatHelper extends Plugin {
         }
         // 检测(())块引用并添加空格
         kramdown = kramdown.replace(/(\(\([^\)]*\)\))(?!\s)/g, '$1 ');
+        kramdown = kramdown.replace(/(?!\s)(\(\([^\)]*\)\))/g, ' $1');
         kramdown = kramdown.replace(/".*"\)\)/g, ' $&');
 
         return kramdown;
@@ -192,8 +193,9 @@ export default class FormatHelper extends Plugin {
         kramdown = kramdown["kramdown"];
         // console.log(kramdown);
         // 不能对列表进行操作，返回的结果不能识别为列表
+        // 但是单个列表项已经可以了，我先不开放先...
         if (kramdown.startsWith("*") || kramdown.startsWith("1.")) {
-            api.sendError("不能处理列表，数据会丢失！");
+            api.sendError(this.i18n.listWarning);
             return;
         }
         // 移除所有空格

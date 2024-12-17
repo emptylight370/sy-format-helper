@@ -4,5 +4,6 @@
   "byePlugin": "Format helper unloaded successed!",
   "uninstallPlugin": "Format helper removed successed!",
   "textBlockRmWhiteSpace": "Remove space in paragraph",
-  "textBlockKeepWhiteSpace": "Keep one whitespace in paragraph"
+  "textBlockKeepWhiteSpace": "Keep one whitespace in paragraph",
+  "listWarning": "Can't process list, your data would lost!"
 }
