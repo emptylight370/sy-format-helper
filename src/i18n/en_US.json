@@ -1,6 +1,8 @@
 {
+  "title": "Format Helper",
   "helloPlugin": "Format helper loaded successed!",
   "byePlugin": "Format helper unloaded successed!",
   "uninstallPlugin": "Format helper removed successed!",
-  "textBlock": "Remove space in param"
+  "textBlockRmWhiteSpace": "Remove space in paragraph",
+  "textBlockKeepWhiteSpace": "Keep one whitespace in paragraph"
 }

@@ -1,6 +1,8 @@
 {
+  "title": "格式助手",
   "helloPlugin": "格式化助手加载成功!",
   "byePlugin": "格式化助手已禁用!",
   "uninstallPlugin": "格式化助手移除成功!",
-  "textBlock": "移除段落内空格"
+  "textBlockRmWhiteSpace": "移除段落内空格",
+  "textBlockKeepWhiteSpace": "保留一个空格"
 }
