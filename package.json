@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint . --fix --cache",
     "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "clean": "del index.js index.css package.zip && rmdir /s /q i18n dist"
   },
   "keywords": [],
   "author": "Emptylight",

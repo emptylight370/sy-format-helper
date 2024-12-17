@@ -1,0 +1,38 @@
+name: Package
+
+on: 
+  push:
+    paths: 
+      - 'plugin.json'
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install deps
+        run: pnpm i
+
+      - name: install jq
+        run: sudo apt-get install jq
+
+      - name: create tag
+        run: echo "VERSION=$(jq -r ".version" plugin.json)" >> $GITHUB_ENV
+
+      - name: package
+        run: pnpm build
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: package.zip
+          name: Release ${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          make_latest: true
