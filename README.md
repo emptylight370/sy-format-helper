@@ -32,7 +32,7 @@
 
 | Repo | Author | Content | LICENSE |
 | --- | --- | --- | --- |
-| None | [player](https://ld246.com/member/player) | [Review](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | None |
+| None | [player](https://ld246.com/member/player) | [Reply](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | None |
 | None | [Frostime](https://ld246.com/member/Frostime) | [插件开发 Quick Start](https://ld246.com/article/1723732790981) | None |
 | [SiYuan API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | SiYuan Developers | SiYuan API | AGPL3.0 |
 | [Transfer refs](https://github.com/frostime/sy-transfer-refs) | [Frostime](https://github.com/frostime) | [The way to contact SiYuan API](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT |
