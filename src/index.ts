@@ -28,6 +28,7 @@ export default class FormatHelper extends Plugin {
 
     private custom: () => Custom;
     private isMobile: boolean;
+    private appId = this.app.appId;
 
     // 加载完成
     onload() {
@@ -160,8 +161,8 @@ export default class FormatHelper extends Plugin {
     private addTextBlockItem({ detail }: any) {
         let menu: Menu = detail.menu;
         let submenu = [];
-        let protype: HTMLElement = detail.blockElements[0];
-        let blockId = protype.getAttribute('data-node-id');
+        let protyle: HTMLElement = detail.blockElements[0];
+        let blockId = protyle.getAttribute('data-node-id');
         submenu.push({
             icon: "iconInfo",
             label: this.i18n.textBlockRmWhiteSpace,
@@ -190,8 +191,17 @@ export default class FormatHelper extends Plugin {
     private async handleTextBlock(blockId: string, type: string) {
         let kramdown = await api.getKramdown(blockId);
         // console.log(kramdown);
+        let dom = await api.getDom(blockId);
+        // console.log(dom);
+        let d2m = await api.DOM2MD(dom);
+        // console.log(d2m);
+        if (kramdown == null) {
+            api.sendError("无法获取当前段落内容");
+        }
         kramdown = kramdown["kramdown"];
         // console.log(kramdown);
+        let original = await api.MD2DOM(kramdown);
+        // console.log(original);
         // 不能对列表进行操作，返回的结果不能识别为列表
         // 但是单个列表项已经可以了，我先不开放先...
         if (kramdown.startsWith("*") || kramdown.startsWith("1.")) {
@@ -205,11 +215,14 @@ export default class FormatHelper extends Plugin {
         else if (type == "keep")
             kramdown = this.keepWriteSpace(kramdown);
         // console.log(kramdown);
-        // 移除结尾的相同字符，例如引述块
-        kramdown = this.removeEndSimilar(kramdown);
+        // 移除结尾的相同字符，例如引述块，可能已经不需要了
+        // kramdown = this.removeEndSimilar(kramdown);
         // console.log(kramdown);
         // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
         kramdown = this.postRecover(kramdown);
+        let updated = await api.MD2DOM(kramdown);
+        // console.log(updated);
         await api.updateBlock(blockId, kramdown);
+        // await api.updateBlockTransactions(blockId, this.appId, original, updated);
     }
 }
