@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0
+
+- 成功将操作改写成dom方式
+- Success rewrite the process to dom
+
 ## v0.1.1
 
 - 成功保留了id和一个空格

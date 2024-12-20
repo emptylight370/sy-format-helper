@@ -9,6 +9,10 @@
 - TODO(such as process a document)
 - TODO(such as format code block)(I want to do but I may not be able to)
 
+## Notice
+
+> Actions may result in unexpected changes. Currently, you can undo the previous operation by using the undo key.
+
 ## Processable block
 
 - paragraph
@@ -21,6 +25,8 @@
 
 ## Update Logs
 
+- v0.2.0
+  - Success rewrite the process to dom
 - v0.1.1
   - In a better way to process whitespace
   - Support keep some special format
@@ -33,6 +39,7 @@
 | Repo | Author | Content | LICENSE |
 | --- | --- | --- | --- |
 | None | [player](https://ld246.com/member/player) | [Reply](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | None |
+| None | [Achuan-2](https://ld246.com/member/Achuan-2) | [Reply](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments) | None |
 | None | [Frostime](https://ld246.com/member/Frostime) | [PLugin Development Quick Start](https://ld246.com/article/1723732790981) | None |
 | [SiYuan API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | SiYuan Developers | SiYuan API | AGPL3.0 |
 | [Transfer refs](https://github.com/frostime/sy-transfer-refs) | [Frostime](https://github.com/frostime) | [The way to contact SiYuan API](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT |

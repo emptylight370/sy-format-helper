@@ -53,73 +53,46 @@ export default class FormatHelper extends Plugin {
     }
 
     // 移除空格
-    private removeWriteSpace(kramdown: string): string {
-        // 正则表达式用于匹配 ((...)) 内的 "" 内的文本部分
-        const textPattern = /(?<=\(\([^\s"]*\s")([^"]*)(?="\)\))/g;
-
-        // 替换函数，用于去除匹配到的文本中的多余空格
-        function replaceSpaces(match: string): string {
-            return match.trim().replace(/[ \t\f\v]+/g, '');
+    private removeWriteSpace(dom: { dom: string, id: string }, keep: 0 | 1) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelector('[data-node-id]');
+        // console.log(blockElements);
+        if (!blockElements) {
+            console.warn("No block elements found.");
+            api.sendError(this.i18n.noTextFound);
+            return dom;
         }
 
-        // 提取花括号内的内容
-        const attributePattern = /{[^}]*}/g;
-        const attributes = kramdown.match(attributePattern) || [];
-        kramdown = kramdown.replace(attributePattern, 'PLACEHOLDER');
-
-        // 对所有匹配到的文本部分应用替换函数
-        let result = kramdown.replace(textPattern, replaceSpaces);
-
-        // 处理不在 ((...)) 内部的纯文本部分
-        // 使用负向前瞻和后瞻断言来确保不匹配标志部分
-        const outsidePattern = /(?<!$\()[^"\{\}\($]+(?!\)\))/g;
-        result = result.replace(outsidePattern, (match) => {
-            // 保留换行符
-            return match.split('\n').map(replaceSpaces).join('\n');
-        });
-
-        // 将花括号内的内容插回去
-        let index = 0;
-        result = result.replace(/PLACEHOLDER/g, () => attributes[index++] || '');
-
-        return result;
-    }
-
-    // 保留一个空格
-    private keepWriteSpace(kramdown: string): string {
-        // 正则表达式用于匹配 ((...)) 内的 "" 内的文本部分
-        const textPattern = /(?<=\(\([^\s"]*\s")([^"]*)(?="\)\))/g;
-
-        // 替换函数，用于去除匹配到的文本中的多余空格，但是保留一个空格
-        function replaceSpaces(match: string): string {
-            return match.trim().replace(/[ \t\f\v]+/g, ' ');
+        let editable = blockElements.querySelector('div[contenteditable=true]');
+        if (editable) {
+            let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+            let node;
+            while (node = walker.nextNode()) {
+                let innerText = node.nodeValue;
+                console.log(innerText);
+                // 去除文本中的多余空格，但保留换行符
+                if (innerText) {
+                    if (keep == 0)
+                        innerText = innerText.replace(/[ \t\f\v]+/g, '').trim();
+                    else if (keep == 1)
+                        innerText = innerText.replace(/[ \t\f\v]+/g, ' ').trim();
+                    console.log(innerText);
+                    node.nodeValue = innerText;
+                }
+            }
         }
 
-        // 提取花括号内的内容
-        const attributePattern = /{[^}]*}/g;
-        const attributes = kramdown.match(attributePattern) || [];
-        kramdown = kramdown.replace(attributePattern, 'PLACEHOLDER');
+        dom.dom = doc.body.innerHTML;
+        console.log(dom);
 
-        // 对所有匹配到的文本部分应用替换函数
-        let result = kramdown.replace(textPattern, replaceSpaces);
-
-        // 处理不在 ((...)) 内部的纯文本部分
-        // 使用负向前瞻和后瞻断言来确保不匹配标志部分
-        const outsidePattern = /(?<!$\()[^"\{\}\($]+(?!\)\))/g;
-        result = result.replace(outsidePattern, (match) => {
-            // 保留换行符
-            return match.split('\n').map(replaceSpaces).join('\n');
-        });
-
-        // 将花括号内的内容插回去
-        let index = 0;
-        result = result.replace(/PLACEHOLDER/g, () => attributes[index++] || '');
-
-        return result;
+        // 返回修改后的整个 DOM 文档
+        return dom;
     }
 
     // 移除和开头相同的字符
     private removeEndSimilar(kramdown: string) {
+        return kramdown;
         // 如果长度为0直接返回
         if (kramdown.length == 0) {
             return kramdown;
@@ -139,6 +112,7 @@ export default class FormatHelper extends Plugin {
 
     // 对结果进行后处理
     private postRecover(kramdown: string) {
+        return kramdown;
         if (kramdown.length == 0) {
             return kramdown;
         }
@@ -189,40 +163,40 @@ export default class FormatHelper extends Plugin {
 
     // 处理内容块菜单点击事件
     private async handleTextBlock(blockId: string, type: string) {
-        let kramdown = await api.getKramdown(blockId);
-        // console.log(kramdown);
-        let dom = await api.getDom(blockId);
-        // console.log(dom);
-        let d2m = await api.DOM2MD(dom);
-        // console.log(d2m);
-        if (kramdown == null) {
-            api.sendError("无法获取当前段落内容");
+        // 获取块
+        let dom: { dom: string, id: string } = await api.getDom(blockId);
+        let id = dom.id;
+        console.log(dom);
+        // console.log(dom.dom);
+        // 如果未获取到块
+        if (dom == null || dom == undefined) {
+            api.sendError(this.i18n.noParaFound);
+            return
         }
-        kramdown = kramdown["kramdown"];
-        // console.log(kramdown);
-        let original = await api.MD2DOM(kramdown);
-        // console.log(original);
+        // 如果获取到的块id不对(看似不可能发生)
+        if (blockId != id) {
+            api.sendError(this.i18n.idWrong);
+            return
+        }
         // 不能对列表进行操作，返回的结果不能识别为列表
         // 但是单个列表项已经可以了，我先不开放先...
-        if (kramdown.startsWith("*") || kramdown.startsWith("1.")) {
-            api.sendError(this.i18n.listWarning);
-            return;
-        }
+        // if (kramdown.startsWith("*") || kramdown.startsWith("1.")) {
+        //     api.sendError(this.i18n.listWarning);
+        //     return;
+        // }
         // 移除所有空格
         if (type == "remove")
-            kramdown = this.removeWriteSpace(kramdown);
+            var newDom = this.removeWriteSpace(dom, 0);
         // 保留一个空格
         else if (type == "keep")
-            kramdown = this.keepWriteSpace(kramdown);
+            newDom = this.removeWriteSpace(dom, 1);
         // console.log(kramdown);
         // 移除结尾的相同字符，例如引述块，可能已经不需要了
         // kramdown = this.removeEndSimilar(kramdown);
         // console.log(kramdown);
         // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
-        kramdown = this.postRecover(kramdown);
-        let updated = await api.MD2DOM(kramdown);
-        // console.log(updated);
-        await api.updateBlock(blockId, kramdown);
-        // await api.updateBlockTransactions(blockId, this.appId, original, updated);
+        // newDom = this.postRecover(newDom);
+        // await api.updateBlock(blockId, kramdown);
+        await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
     }
 }

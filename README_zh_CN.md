@@ -9,6 +9,10 @@
 - 待开发(比如处理一篇文档之类的)
 - 待开发(比如给代码块做格式化)(我想做但是不一定能做)
 
+## 注意
+
+> 操作可能会导致意外变化。目前可以通过撤销键来撤销上一步操作。
+
 ## 可处理块
 
 - 段落块
@@ -21,6 +25,8 @@
 
 ## 更新日志
 
+- v0.2.0
+  - 成功将操作改写成dom形式
 - v0.1.1
   - 处理空格方式优化
   - 支持保留部分特殊格式
@@ -33,6 +39,7 @@
 | 仓库 | 作者 | 内容 | 许可证 |
 | --- | --- | --- | --- |
 | 无 | [player](https://ld246.com/member/player) | [回帖](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | 无 |
+| 无 | [Achuan-2](https://ld246.com/member/Achuan-2) | [回帖](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments) | 无 |
 | 无 | [Frostime](https://ld246.com/member/Frostime) | [插件开发 Quick Start](https://ld246.com/article/1723732790981) | 无 |
 | [思源API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | 思源开发者们 | 思源API | AGPL3.0 |
 | [转移引用](https://github.com/frostime/sy-transfer-refs) | [Frostime](https://github.com/frostime) | [向思源发送API请求的方式](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT |

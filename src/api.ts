@@ -26,7 +26,7 @@ export async function updateBlock(id: string, markdown: string) {
 }
 
 // 通过事务更新块，可撤回，应该是只支持DOM
-export async function updateBlockTransactions(nodeId: string, appId: string, original: string, updated: string) {
+export async function updateBlockTransactions(nodeId: string, appId: string, original: any, updated: any) {
     let nowTime = new Date().getTime();
     let data = [{
         "doOperations": [{

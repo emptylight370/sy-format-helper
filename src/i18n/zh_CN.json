@@ -5,5 +5,8 @@
   "uninstallPlugin": "格式化助手移除成功!",
   "textBlockRmWhiteSpace": "移除段落内空格",
   "textBlockKeepWhiteSpace": "保留一个空格",
-  "listWarning": "不能处理列表，数据会丢失!"
+  "listWarning": "不能处理列表，数据会丢失!",
+  "noTextFound": "未找到文本",
+  "noParaFound": "无法获取当前段落文本",
+  "idWrong": "选中块id与获取块id不匹配"
 }
