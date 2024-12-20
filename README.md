@@ -16,12 +16,14 @@
 ## Processable block
 
 - paragraph
+- set format paragraph
 - heading
 - blockquote
 - tag（won't affect）
 - link
 - block reference
-- embed block（won't affect, but you shouldn't）
+- list
+- super block
 
 ## Update Logs
 

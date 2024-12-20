@@ -56,79 +56,45 @@ export default class FormatHelper extends Plugin {
     private removeWriteSpace(dom: { dom: string, id: string }, keep: 0 | 1) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(dom.dom, "text/html");
-        let blockElements = doc.querySelector('[data-node-id]');
+        let blockElements = doc.querySelectorAll('[data-node-id]');
         // console.log(blockElements);
-        if (!blockElements) {
+        if (blockElements.length === 0) {
             console.warn("No block elements found.");
             api.sendError(this.i18n.noTextFound);
             return dom;
         }
 
-        let editable = blockElements.querySelector('div[contenteditable=true]');
-        if (editable) {
-            let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-            let node;
-            while (node = walker.nextNode()) {
-                let innerText = node.nodeValue;
-                console.log(innerText);
-                // 去除文本中的多余空格，但保留换行符
-                if (innerText) {
-                    if (keep == 0)
-                        innerText = innerText.replace(/[ \t\f\v]+/g, '').trim();
-                    else if (keep == 1)
-                        innerText = innerText.replace(/[ \t\f\v]+/g, ' ').trim();
-                    console.log(innerText);
-                    node.nodeValue = innerText;
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    // console.log(innerText);
+                    // 去除文本中的多余空格，但保留换行符
+                    if (innerText) {
+                        if (keep == 0)
+                            innerText = innerText.replace(/[ \t\f\v]+/g, '').trim();
+                        else if (keep == 1)
+                            innerText = innerText.replace(/[ \t\f\v]+/g, ' ').trim();
+                        // console.log(innerText);
+                        node.nodeValue = innerText;
+                    }
                 }
             }
-        }
+        });
 
         dom.dom = doc.body.innerHTML;
-        console.log(dom);
+        // console.log(dom);
 
         // 返回修改后的整个 DOM 文档
         return dom;
     }
 
-    // 移除和开头相同的字符
-    private removeEndSimilar(kramdown: string) {
-        return kramdown;
-        // 如果长度为0直接返回
-        if (kramdown.length == 0) {
-            return kramdown;
-        }
-        // 获取第一个字符
-        let firstChar = kramdown.charAt(0);
-        // 获取最后一个字符
-        let lastChar = kramdown.charAt(kramdown.length - 1);
-        // 检测字符是否一样
-        if (firstChar == lastChar) {
-            // 去除最后一个字符
-            return kramdown.slice(0, -1);
-        }
-        // 返回原字符串
-        return kramdown;
-    }
-
     // 对结果进行后处理
-    private postRecover(kramdown: string) {
-        return kramdown;
-        if (kramdown.length == 0) {
-            return kramdown;
-        }
-
-        let firstChar = kramdown.charAt(0);
-        // 检测是否是标题
-        if (firstChar == "#") {
-            // 在连续的#之后插入一个空格
-            kramdown = kramdown.replace(/^(#+)([^\s#])/g, '$1 $2');
-        }
-        // 检测(())块引用并添加空格
-        kramdown = kramdown.replace(/(\(\([^\)]*\)\))(?!\s)/g, '$1 ');
-        kramdown = kramdown.replace(/(?!\s)(\(\([^\)]*\)\))/g, ' $1');
-        kramdown = kramdown.replace(/".*"\)\)/g, ' $&');
-
-        return kramdown;
+    private postRecover(dom: { dom: string, id: string }) {
+        return dom;
     }
 
     // 添加内容块菜单
@@ -166,7 +132,7 @@ export default class FormatHelper extends Plugin {
         // 获取块
         let dom: { dom: string, id: string } = await api.getDom(blockId);
         let id = dom.id;
-        console.log(dom);
+        // console.log(dom);
         // console.log(dom.dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
@@ -178,21 +144,12 @@ export default class FormatHelper extends Plugin {
             api.sendError(this.i18n.idWrong);
             return
         }
-        // 不能对列表进行操作，返回的结果不能识别为列表
-        // 但是单个列表项已经可以了，我先不开放先...
-        // if (kramdown.startsWith("*") || kramdown.startsWith("1.")) {
-        //     api.sendError(this.i18n.listWarning);
-        //     return;
-        // }
         // 移除所有空格
         if (type == "remove")
             var newDom = this.removeWriteSpace(dom, 0);
         // 保留一个空格
         else if (type == "keep")
             newDom = this.removeWriteSpace(dom, 1);
-        // console.log(kramdown);
-        // 移除结尾的相同字符，例如引述块，可能已经不需要了
-        // kramdown = this.removeEndSimilar(kramdown);
         // console.log(kramdown);
         // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
         // newDom = this.postRecover(newDom);
