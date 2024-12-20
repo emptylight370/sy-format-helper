@@ -8,5 +8,7 @@
   "listWarning": "Can't process list, your data would lost!",
   "noTextFound": "No Text Found",
   "noParaFound": "Can't get current paragraph",
-  "idWrong": "The selected block id does not match the obtained block id"
+  "idWrong": "The selected block id does not match the obtained block id",
+  "codeBlockAdjIndex": "Code Block adjust indentation",
+  "nothingChange": "Nothing Changed"
 }

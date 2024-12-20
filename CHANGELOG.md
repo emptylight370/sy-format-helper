@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.1
+
+- 添加不同的选中块类型判断
+- Add different selected block judgment
+
 ## v0.2.0
 
 - 成功将操作改写成dom方式

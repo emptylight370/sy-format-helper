@@ -27,14 +27,14 @@
 
 ## Update Logs
 
+- v0.2.1
+  - Add different selected block judgment
 - v0.2.0
   - Success rewrite the process to dom
 - v0.1.1
   - In a better way to process whitespace
   - Support keep some special format
   - Support keep one whitespace
-- v0.1.0
-  - Able to process whitespace first
 
 # Thanks
 

@@ -52,7 +52,84 @@ export default class FormatHelper extends Plugin {
         console.log(this.i18n.uninstallPlugin);
     }
 
-    // 移除空格
+    // SECTION 添加点击菜单====================>
+    // NOTE - 添加内容块菜单
+    private addTextBlockItem({ detail }: any) {
+        let menu: Menu = detail.menu;
+        let submenu = [];
+        let protyle: HTMLElement = detail.blockElements[0];
+        let blockId = protyle.getAttribute('data-node-id');
+        let children = detail.blockElements[0].childNodes;
+        // 判断选中块类型，目前只能快速分辨代码块
+        if (Array.from(children).some(child => (child as HTMLElement).classList.contains('hljs'))) {
+            submenu.push({
+                icon: "iconInfo",
+                label: this.i18n.codeBlockAdjIndex,
+                click: () => {
+                    this.handleCodeBlock(blockId, "indent");
+                }
+            })
+        } else {
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockRmWhiteSpace,
+                click: () => {
+                    this.handleTextBlock(blockId, "remove");
+                }
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockKeepWhiteSpace,
+                click: () => {
+                    this.handleTextBlock(blockId, "keep");
+                }
+            })
+        }
+        if (submenu.length != 0) {
+            menu.addItem({
+                icon: "iconFormat",
+                label: this.i18n.title,
+                type: "submenu",
+                submenu: submenu
+            })
+        }
+    }
+    // !SECTION 添加点击菜单====================<
+
+    // SECTION 处理文本操作====================>
+    // NOTE - 处理内容块菜单点击事件
+    private async handleTextBlock(blockId: string, type: string) {
+        // 获取块
+        let dom: { dom: string, id: string } = await api.getDom(blockId);
+        let id = dom.id;
+        // console.log(dom);
+        // 如果未获取到块
+        if (dom == null || dom == undefined) {
+            api.sendError(this.i18n.noParaFound);
+            return
+        }
+        // 如果获取到的块id不对(看似不可能发生)
+        if (blockId != id) {
+            api.sendError(this.i18n.idWrong);
+            return
+        }
+        // 移除所有空格
+        if (type == "remove")
+            var newDom = this.removeWriteSpace(dom, 0);
+        // 保留一个空格
+        else if (type == "keep")
+            newDom = this.removeWriteSpace(dom, 1);
+        // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
+        // newDom = this.postRecover(newDom);
+        // await api.updateBlock(blockId, kramdown);
+        if (newDom == null || newDom == undefined || newDom === dom) {
+            api.sendMessage(this.i18n.nothingChange);
+        } else {
+            await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
+        }
+    }
+
+    // NOTE - 移除空格
     private removeWriteSpace(dom: { dom: string, id: string }, keep: 0 | 1) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(dom.dom, "text/html");
@@ -92,48 +169,19 @@ export default class FormatHelper extends Plugin {
         return dom;
     }
 
-    // 对结果进行后处理
+    // NOTE - 对结果进行后处理
     private postRecover(dom: { dom: string, id: string }) {
         return dom;
     }
+    // !SECTION 处理文本操作====================<
 
-    // 添加内容块菜单
-    private addTextBlockItem({ detail }: any) {
-        let menu: Menu = detail.menu;
-        let submenu = [];
-        let protyle: HTMLElement = detail.blockElements[0];
-        let blockId = protyle.getAttribute('data-node-id');
-        submenu.push({
-            icon: "iconInfo",
-            label: this.i18n.textBlockRmWhiteSpace,
-            click: () => {
-                // console.log(detail);
-                // console.log(blockId);
-                this.handleTextBlock(blockId, "remove");
-            }
-        });
-        submenu.push({
-            icon: "iconInfo",
-            label: this.i18n.textBlockKeepWhiteSpace,
-            click: () => {
-                this.handleTextBlock(blockId, "keep");
-            }
-        })
-        menu.addItem({
-            icon: "iconInfo",
-            label: this.i18n.title,
-            type: "submenu",
-            submenu: submenu
-        })
-    }
-
-    // 处理内容块菜单点击事件
-    private async handleTextBlock(blockId: string, type: string) {
+    // SECTION 处理代码块操作====================>
+    // NOTE - 处理代码块菜单点击事件
+    private async handleCodeBlock(blockId: string, type: string) {
         // 获取块
         let dom: { dom: string, id: string } = await api.getDom(blockId);
         let id = dom.id;
         // console.log(dom);
-        // console.log(dom.dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
             api.sendError(this.i18n.noParaFound);
@@ -144,16 +192,39 @@ export default class FormatHelper extends Plugin {
             api.sendError(this.i18n.idWrong);
             return
         }
-        // 移除所有空格
-        if (type == "remove")
-            var newDom = this.removeWriteSpace(dom, 0);
-        // 保留一个空格
-        else if (type == "keep")
-            newDom = this.removeWriteSpace(dom, 1);
-        // console.log(kramdown);
-        // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
-        // newDom = this.postRecover(newDom);
-        // await api.updateBlock(blockId, kramdown);
-        await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
+        if (type == "indent") {
+            var newDom = this.codeBlockDecline(dom);
+
+        }
+        if (newDom == null || newDom == undefined || newDom === dom) {
+            api.sendMessage(this.i18n.nothingChange);
+        } else {
+            await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
+        }
     }
+
+    // NOTE - 移除代码块缩进
+    private codeBlockDecline(dom: { dom: string, id: string }) {
+        console.log(dom);
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        var hljs = doc.querySelector('div.hljs');
+        var editable = hljs.querySelector("[contenteditable=true]");
+        var innerHTML = editable.innerHTML.replace(/^[ \t]+/gm, "");
+        editable.innerHTML = innerHTML;
+        dom.dom = doc.body.innerHTML;
+        console.log(dom);
+        return dom;
+    }
+
+    // NOTE - 添加代码块缩进
+    private codeBlockRise(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        var hljs = doc.querySelector('div.hljs');
+        var editable = hljs.querySelector("[contenteditable=true]");
+        var innerHTML = editable.innerHTML;
+        return dom;
+    }
+    // !SECTION 处理代码块操作====================<
 }
