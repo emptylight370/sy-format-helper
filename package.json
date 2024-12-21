@@ -9,7 +9,7 @@
     "build": "webpack --mode production",
     "clean": "del index.js index.css package.zip && rmdir /s /q i18n dist",
     "copy": "powershell -Command \"Copy-Item -Path \"./dist/*\" -Destination \"%USERPROFILE%/SiYuan/data/plugins/sy-format-helper/\" -Recurse -Force\"",
-    "siyuan": "pnpm run build && pnpm run copy"
+    "siyuan": "pnpm run build && pnpm run copy && pnpm run clean"
   },
   "keywords": [],
   "author": "Emptylight",

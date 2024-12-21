@@ -3,7 +3,9 @@
 ## v0.2.1
 
 - 添加不同的选中块类型判断
+- 添加增加空格的方法
 - Add different selected block judgment
+- Add function to add space
 
 ## v0.2.0
 

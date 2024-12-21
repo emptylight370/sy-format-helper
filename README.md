@@ -6,6 +6,7 @@
 
 - Remove all whitespace in paragraph
 - Keep only one blank space in a paragraph
+- Add whitespace before and after number and English char(similar with Optimize typography)
 - TODO(such as process a document)
 - TODO(such as format code block)(I want to do but I may not be able to)
 
@@ -29,6 +30,7 @@
 
 - v0.2.1
   - Add different selected block judgment
+  - Add function to add space
 - v0.2.0
   - Success rewrite the process to dom
 - v0.1.1

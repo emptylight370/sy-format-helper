@@ -10,5 +10,6 @@
   "noParaFound": "无法获取当前段落文本",
   "idWrong": "选中块id与获取块id不匹配",
   "codeBlockAdjIndex": "代码块调节缩进",
-  "nothingChange": "未改变"
+  "nothingChange": "未改变",
+  "textBlockAddSpace": "添加空格"
 }

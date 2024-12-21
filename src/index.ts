@@ -52,6 +52,14 @@ export default class FormatHelper extends Plugin {
         console.log(this.i18n.uninstallPlugin);
     }
 
+    private Msg(message: string, timeout?: number) {
+        api.sendMessage(this.i18n.title + ":" + message, timeout);
+    }
+
+    private Err(message: string, timeout?: number) {
+        api.sendError(message, timeout);
+    }
+
     // SECTION 添加点击菜单====================>
     // NOTE - 添加内容块菜单
     private addTextBlockItem({ detail }: any) {
@@ -83,6 +91,13 @@ export default class FormatHelper extends Plugin {
                 click: () => {
                     this.handleTextBlock(blockId, "keep");
                 }
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockAddSpace,
+                click: () => {
+                    this.handleTextBlock(blockId, "space");
+                }
             })
         }
         if (submenu.length != 0) {
@@ -101,31 +116,38 @@ export default class FormatHelper extends Plugin {
     private async handleTextBlock(blockId: string, type: string) {
         // 获取块
         let dom: { dom: string, id: string } = await api.getDom(blockId);
+        let origin = { dom: "", id: "" };
+        origin.dom = dom.dom;
+        origin.id = dom.id;
         let id = dom.id;
         // console.log(dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
-            api.sendError(this.i18n.noParaFound);
+            this.Err(this.i18n.noParaFound);
             return
         }
         // 如果获取到的块id不对(看似不可能发生)
         if (blockId != id) {
-            api.sendError(this.i18n.idWrong);
+            this.Err(this.i18n.idWrong);
             return
         }
+        let updated;
         // 移除所有空格
         if (type == "remove")
-            var newDom = this.removeWriteSpace(dom, 0);
+            updated = this.removeWriteSpace(dom, 0);
         // 保留一个空格
         else if (type == "keep")
-            newDom = this.removeWriteSpace(dom, 1);
+            updated = this.removeWriteSpace(dom, 1);
+        // 为数字和英文添加空格
+        else if (type == "space")
+            updated = this.addSpace(dom);
         // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
-        // newDom = this.postRecover(newDom);
+        // updated = this.postRecover(updated);
         // await api.updateBlock(blockId, kramdown);
-        if (newDom == null || newDom == undefined || newDom === dom) {
-            api.sendMessage(this.i18n.nothingChange);
+        if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
+            this.Msg(this.i18n.nothingChange);
         } else {
-            await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
+            await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
         }
     }
 
@@ -137,7 +159,7 @@ export default class FormatHelper extends Plugin {
         // console.log(blockElements);
         if (blockElements.length === 0) {
             console.warn("No block elements found.");
-            api.sendError(this.i18n.noTextFound);
+            this.Err(this.i18n.noTextFound);
             return dom;
         }
 
@@ -173,6 +195,36 @@ export default class FormatHelper extends Plugin {
     private postRecover(dom: { dom: string, id: string }) {
         return dom;
     }
+
+    // NOTE - 对数字英文添加空格
+    private addSpace(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            this.Err(this.i18n.noTextFound);
+            return dom;
+        }
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    // 匹配数字和英文，添加空格
+                    if (innerText) {
+                        innerText = innerText.replace(/([^0-9a-zA-Z])([0-9a-zA-Z \t\f\v]+)/g, '$1 $2').trim();
+                        innerText = innerText.replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, '$1 $2').trim();
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
     // !SECTION 处理文本操作====================<
 
     // SECTION 处理代码块操作====================>
@@ -184,12 +236,12 @@ export default class FormatHelper extends Plugin {
         // console.log(dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
-            api.sendError(this.i18n.noParaFound);
+            this.Err(this.i18n.noParaFound);
             return
         }
         // 如果获取到的块id不对(看似不可能发生)
         if (blockId != id) {
-            api.sendError(this.i18n.idWrong);
+            this.Err(this.i18n.idWrong);
             return
         }
         if (type == "indent") {
@@ -197,7 +249,7 @@ export default class FormatHelper extends Plugin {
 
         }
         if (newDom == null || newDom == undefined || newDom === dom) {
-            api.sendMessage(this.i18n.nothingChange);
+            this.Msg(this.i18n.nothingChange);
         } else {
             await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
         }

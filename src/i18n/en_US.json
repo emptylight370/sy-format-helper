@@ -10,5 +10,6 @@
   "noParaFound": "Can't get current paragraph",
   "idWrong": "The selected block id does not match the obtained block id",
   "codeBlockAdjIndex": "Code Block adjust indentation",
-  "nothingChange": "Nothing Changed"
+  "nothingChange": "Nothing Changed",
+  "textBlockAddSpace": "Add space"
 }
