@@ -13,6 +13,8 @@
 ## Notice
 
 > Actions may result in unexpected changes. Currently, you can undo the previous operation by using the undo key.
+>
+> Warning❗: Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
 
 ## Processable block
 
