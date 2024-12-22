@@ -1,0 +1,52 @@
+name: 'Feature Request'
+description: '添加一个功能/Suggest an idea for this project'
+
+title: "[FR] 在这里描述你的功能/Describe your feature here"
+labels: ["enhancement"]
+
+body:
+  - type: 'textarea'
+    id: related-problem
+    attributes:
+      label: 'If your feature request related to a problem, describe it here./如果你的功能和问题相关，在这里描述它。'
+      description: |
+        Please describe the problem or link to it here.
+        请描述你的问题或链接到它。
+      placeholder: 'problem or #1'
+  - type: 'textarea'
+    id: describe-feature
+    attributes:
+      label: 'Describe your feature here./在这里描述你的功能。'
+    validations:
+      required: true
+  - type: 'textarea'
+    id: additional-information
+    attributes:
+      label: 'Additional Information/附加信息'
+      description: |
+        Any information need to attach.
+        任何需要的信息。
+      placeholder: |
+        The information might be useful...
+        可能有用的信息...
+  - type: 'checkboxes'
+    id: last-check
+    attributes:
+      label: '检查清单 - Check list'
+      description: |
+        Last check of your feature request.
+        最后检查一次你的功能请求。
+      options:
+        - label: 'I have finished the title and deleted the hints. (keep the [FR] there)/我已经填好了标题并且删除了提示文本。(保留[FR]在原处)'
+          required: false
+        - label: 'I have clearly described my feature./我已经清楚地描述了我想要的功能。'
+          required: false
+        - label: 'I know the feature can related to this plugin./我知道这个功能和本插件有关系。'
+          required: false
+        - label: "I didn't check all the checkboxes and therefore I just checked all of them. Please close and tag this feature request./我没有检查所有的复选框，只是闭眼选中了所有复选框。请关闭并标记这个功能请求。"
+          required: false
+        - label: 'No other plugin accomplish this feature./没有其他插件完成这个功能。'
+          required: false
+        - label: 'Not too hard for a plguin to complete this feature./这个功能对插件来说不难实现。'
+          required: false
+          
