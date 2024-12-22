@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.2
+
+- 修复添加空格的错误
+- Fix error in add space
+
 ## v0.2.1
 
 - 添加不同的选中块类型判断

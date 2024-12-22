@@ -30,15 +30,13 @@
 
 ## Update Logs
 
+- v0.2.2
+  - Fix error in add space
 - v0.2.1
   - Add different selected block judgment
   - Add function to add space
 - v0.2.0
   - Success rewrite the process to dom
-- v0.1.1
-  - In a better way to process whitespace
-  - Support keep some special format
-  - Support keep one whitespace
 
 # Thanks
 
