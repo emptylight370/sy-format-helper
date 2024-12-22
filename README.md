@@ -12,9 +12,11 @@
 
 ## Notice
 
-> Actions may result in unexpected changes. Currently, you can undo the previous operation by using the undo key.
+> Actions may result in **unexpected changes**. Currently, you can undo the previous operation by using the undo key.
 >
-> Warning❗: Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
+> **Warning**❗:
+> - Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
+> - Be sure to back up your data, or save your content in a timely manner. Mishandling may lead to data loss, although it can be retracted, please use it with caution.
 
 ## Processable block
 

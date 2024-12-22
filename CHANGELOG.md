@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.3
+
+- 更新说明文档
+- Update README
+
 ## v0.2.2
 
 - 修复添加空格的错误
