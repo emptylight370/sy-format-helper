@@ -215,7 +215,7 @@ export default class FormatHelper extends Plugin {
                     let innerText = node.nodeValue;
                     // 匹配数字和英文，添加空格
                     if (innerText) {
-                        innerText = innerText.replace(/([^0-9a-zA-Z])([0-9a-zA-Z \t\f\v]+)/g, '$1 $2').trim();
+                        innerText = innerText.replace(/([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g, '$1 $2').trim();
                         innerText = innerText.replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, '$1 $2').trim();
                         node.nodeValue = innerText;
                     }
