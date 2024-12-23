@@ -1,7 +1,7 @@
 import { fetchSyncPost, IWebSocketData, Lute } from "siyuan";
 
 // 发送请求并获得返回结果
-export async function request(url: string, data: any) {
+export async function request(url: string, data?: any) {
     let response: IWebSocketData = await fetchSyncPost(url, data);
     let res = response.code == 0 ? response.data : null;
     return res;
@@ -19,6 +19,10 @@ export async function getDom(id: string) {
     return request("/api/block/getBlockDOM", data);
 }
 
+export async function getCurrentTime() {
+    return request("/api/system/currentTime");
+}
+
 // 更新块
 export async function updateBlock(id: string, markdown: string) {
     let data = { "id": id, "data": markdown, "dataType": "markdown" }
@@ -26,8 +30,8 @@ export async function updateBlock(id: string, markdown: string) {
 }
 
 // 通过事务更新块，可撤回，应该是只支持DOM
-export async function updateBlockTransactions(nodeId: string, appId: string, original: any, updated: any) {
-    let nowTime = new Date().getTime();
+export async function updateBlockTransactions(nodeId: string, appId: string, original: string, updated: string) {
+    let nowTime = await getCurrentTime();
     let data = [{
         "doOperations": [{
             "action": "update",
@@ -46,6 +50,11 @@ export async function updateBlockTransactions(nodeId: string, appId: string, ori
         "reqId": nowTime,
         "transactions": data
     });
+}
+
+// 刷新数据库提交事务
+export async function refreshSQL() {
+    return request("/api/sqlite/flushTransaction");
 }
 
 // 弹出通知

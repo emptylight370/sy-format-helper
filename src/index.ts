@@ -49,6 +49,7 @@ export default class FormatHelper extends Plugin {
 
     // 插件卸载或停用
     uninstall() {
+        this.eventBus.off("click-blockicon", this.addTextBlockItem.bind(this));
         console.log(this.i18n.uninstallPlugin);
     }
 
@@ -148,6 +149,7 @@ export default class FormatHelper extends Plugin {
             this.Msg(this.i18n.nothingChange);
         } else {
             await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
+            await api.refreshSQL();
         }
     }
 
@@ -256,8 +258,10 @@ export default class FormatHelper extends Plugin {
         }
         if (type == "indent") {
             var newDom = this.codeBlockDecline(dom);
-
+            newDom = this.codeBlockRise(newDom);
         }
+        // 暂时抑制代码块操作
+        newDom = null;
         if (newDom == null || newDom == undefined || newDom === dom) {
             this.Msg(this.i18n.nothingChange);
         } else {
