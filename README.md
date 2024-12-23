@@ -1,5 +1,10 @@
 [中文](https://github.com/emptylight370/sy-format-helper/blob/main/README_zh_CN.md)
 
+![GitHub Release Date](https://img.shields.io/github/release-date/emptylight370/sy-format-helper?display_date=published_at)
+![GitHub Release](https://img.shields.io/github/v/release/emptylight370/sy-format-helper)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/emptylight370/sy-format-helper/total)
+![GitHub Repo stars](https://img.shields.io/github/stars/emptylight370/sy-format-helper)
+
 # Format Helper
 
 ## Functions
