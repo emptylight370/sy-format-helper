@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.4
+
+- 发布后更新说明文档
+- Update README after publish
+
 ## v0.2.3
 
 - 更新说明文档
