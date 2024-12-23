@@ -170,9 +170,14 @@ export default class FormatHelper extends Plugin {
                 let node;
                 while (node = walker.nextNode()) {
                     let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
                     // console.log(innerText);
                     // 去除文本中的多余空格，但保留换行符
-                    if (innerText) {
+                    if (innerText && !skip) {
                         if (keep == 0)
                             innerText = innerText.replace(/[ \t\f\v]+/g, '').trim();
                         else if (keep == 1)
@@ -213,8 +218,13 @@ export default class FormatHelper extends Plugin {
                 let node;
                 while (node = walker.nextNode()) {
                     let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
                     // 匹配数字和英文，添加空格
-                    if (innerText) {
+                    if (innerText && !skip) {
                         innerText = innerText.replace(/([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g, '$1 $2').trim();
                         innerText = innerText.replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, '$1 $2').trim();
                         node.nodeValue = innerText;

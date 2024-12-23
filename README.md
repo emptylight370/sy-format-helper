@@ -28,7 +28,7 @@ Select a block, open the block menu, find the format assistant in the plugin men
 - set format paragraph
 - heading
 - blockquote
-- tag（won't affect）
+- tag（the whitespace between two tag will be remove, so two tags will combine together, please use any not whitespace char to divide them）
 - link
 - block reference
 - list
@@ -36,13 +36,13 @@ Select a block, open the block menu, find the format assistant in the plugin men
 
 ## Update Logs
 
+- v0.2.5
+  - Fixed an issue where tags were accidentally handled
 - v0.2.2
   - Fix error in add space
 - v0.2.1
   - Add different selected block judgment
   - Add function to add space
-- v0.2.0
-  - Success rewrite the process to dom
 
 # Thanks
 

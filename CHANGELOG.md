@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.5
+
+- 修复意外处理标签的问题
+- Fixed an issue where tags were accidentally handled
+
 ## v0.2.4
 
 - 发布后更新说明文档
