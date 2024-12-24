@@ -25,7 +25,8 @@
 
 ## How to use
 
-Select a block, open the block menu, find the format assistant in the plugin menu, and select the function you want to use.
+Select a block, open the block menu, find the format assistant in the plugin menu, and select the function you want to use.  
+Wait a minute to refresh the layout, if your change doesn't loaded, you should refresh the layout manually(F5).
 
 ## Processable block
 
@@ -41,13 +42,13 @@ Select a block, open the block menu, find the format assistant in the plugin men
 
 ## Update Logs
 
+- v0.3.0
+  - Change to plugin API to update block
+  - Fix withdraw failure issue
 - v0.2.5
   - Fixed an issue where tags were accidentally handled
 - v0.2.2
   - Fix error in add space
-- v0.2.1
-  - Add different selected block judgment
-  - Add function to add space
 
 # Thanks
 

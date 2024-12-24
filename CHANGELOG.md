@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0
+
+- 换用插件API更新块
+- 修复撤回失效问题
+- Change to plugin API to update block
+- Fix withdraw failure issue
+
 ## v0.2.5
 
 - 修复意外处理标签的问题
