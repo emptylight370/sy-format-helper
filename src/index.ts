@@ -75,21 +75,21 @@ export default class FormatHelper extends Plugin {
                 icon: "iconEdit",
                 label: this.i18n.textBlockRmWhiteSpace,
                 click: () => {
-                    this.handleTextBlock(blockId, "remove");
+                    this.handleTextBlock(blockId, detail.protyle, "remove");
                 }
             });
             submenu.push({
                 icon: "iconEdit",
                 label: this.i18n.textBlockKeepWhiteSpace,
                 click: () => {
-                    this.handleTextBlock(blockId, "keep");
+                    this.handleTextBlock(blockId, detail.protyle, "keep");
                 }
             });
             submenu.push({
                 icon: "iconEdit",
                 label: this.i18n.textBlockAddSpace,
                 click: () => {
-                    this.handleTextBlock(blockId, "space");
+                    this.handleTextBlock(blockId, detail.protyle, "space");
                 }
             })
         }
@@ -106,7 +106,7 @@ export default class FormatHelper extends Plugin {
 
     // SECTION 处理文本操作====================>
     // NOTE - 处理内容块菜单点击事件
-    private async handleTextBlock(blockId: string, type: string) {
+    private async handleTextBlock(blockId: string, protyle: Protyle["protyle"], type: string) {
         // 获取块
         let dom: { dom: string, id: string } = await api.getDom(blockId);
         let origin = { dom: "", id: "" };
@@ -133,14 +133,16 @@ export default class FormatHelper extends Plugin {
         // 为数字和英文添加空格
         else if (type == "space")
             updated = this.addSpace(dom);
-        // 后处理结果，例如加回标题的空格，加回块引用后分隔的空格
-        // updated = this.postRecover(updated);
-        // await api.updateBlock(blockId, kramdown);
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             showMessage(this.i18n.nothingChange);
         } else {
-            // await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
-            Protyle.prototype.updateTransaction(blockId, updated.dom, origin.dom);
+            protyle.getInstance().updateTransaction(blockId, updated.dom, origin.dom);
+            let startTime = Date.now();
+            while (Date.now() - startTime < 1000) {
+                continue;
+            }
+            protyle.getInstance().reload(true);
+            showMessage(this.i18n.needRefresh);
         }
     }
 
@@ -186,11 +188,6 @@ export default class FormatHelper extends Plugin {
         // console.log(dom);
 
         // 返回修改后的整个 DOM 文档
-        return dom;
-    }
-
-    // NOTE - 对结果进行后处理
-    private postRecover(dom: { dom: string, id: string }) {
         return dom;
     }
 

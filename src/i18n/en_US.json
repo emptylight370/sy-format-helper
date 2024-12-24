@@ -11,5 +11,6 @@
   "idWrong": "The selected block id does not match the obtained block id",
   "codeBlockAdjIndex": "Code Block adjust indentation",
   "nothingChange": "Nothing Changed",
-  "textBlockAddSpace": "Add space"
+  "textBlockAddSpace": "Add space",
+  "needRefresh": "Need refersh to show change"
 }
