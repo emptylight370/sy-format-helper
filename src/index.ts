@@ -148,8 +148,8 @@ export default class FormatHelper extends Plugin {
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             this.Msg(this.i18n.nothingChange);
         } else {
-            await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
-            await api.refreshSQL();
+            // await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
+            Protyle.prototype.updateTransaction(blockId, updated.dom, origin.dom);
         }
     }
 
