@@ -53,14 +53,6 @@ export default class FormatHelper extends Plugin {
         console.log(this.i18n.uninstallPlugin);
     }
 
-    private Msg(message: string, timeout?: number) {
-        api.sendMessage(this.i18n.title + ":" + message, timeout);
-    }
-
-    private Err(message: string, timeout?: number) {
-        api.sendError(message, timeout);
-    }
-
     // SECTION 添加点击菜单====================>
     // NOTE - 添加内容块菜单
     private addTextBlockItem({ detail }: any) {
@@ -120,16 +112,15 @@ export default class FormatHelper extends Plugin {
         let origin = { dom: "", id: "" };
         origin.dom = dom.dom;
         origin.id = dom.id;
-        let id = dom.id;
         // console.log(dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
-            this.Err(this.i18n.noParaFound);
+            showMessage(this.i18n.noParaFound, undefined, "error");
             return
         }
         // 如果获取到的块id不对(看似不可能发生)
-        if (blockId != id) {
-            this.Err(this.i18n.idWrong);
+        if (blockId != dom.id) {
+            showMessage(this.i18n.idWrong, undefined, "error");
             return
         }
         let updated;
@@ -146,7 +137,7 @@ export default class FormatHelper extends Plugin {
         // updated = this.postRecover(updated);
         // await api.updateBlock(blockId, kramdown);
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
-            this.Msg(this.i18n.nothingChange);
+            showMessage(this.i18n.nothingChange);
         } else {
             // await api.updateBlockTransactions(blockId, this.appId, origin.dom, updated.dom);
             Protyle.prototype.updateTransaction(blockId, updated.dom, origin.dom);
@@ -161,7 +152,7 @@ export default class FormatHelper extends Plugin {
         // console.log(blockElements);
         if (blockElements.length === 0) {
             console.warn("No block elements found.");
-            this.Err(this.i18n.noTextFound);
+            showMessage(this.i18n.noTextFound, undefined, "error");
             return dom;
         }
 
@@ -210,7 +201,7 @@ export default class FormatHelper extends Plugin {
         let blockElements = doc.querySelectorAll('[data-node-id]');
         if (blockElements.length === 0) {
             console.warn("No block elements found.");
-            this.Err(this.i18n.noTextFound);
+            showMessage(this.i18n.noTextFound, undefined, "error");
             return dom;
         }
         blockElements.forEach(blockElement => {
@@ -248,12 +239,12 @@ export default class FormatHelper extends Plugin {
         // console.log(dom);
         // 如果未获取到块
         if (dom == null || dom == undefined) {
-            this.Err(this.i18n.noParaFound);
+            showMessage(this.i18n.noParaFound, undefined, "error");
             return
         }
         // 如果获取到的块id不对(看似不可能发生)
         if (blockId != id) {
-            this.Err(this.i18n.idWrong);
+            showMessage(this.i18n.idWrong, undefined, "error");
             return
         }
         if (type == "indent") {
@@ -263,7 +254,7 @@ export default class FormatHelper extends Plugin {
         // 暂时抑制代码块操作
         newDom = null;
         if (newDom == null || newDom == undefined || newDom === dom) {
-            this.Msg(this.i18n.nothingChange);
+            showMessage(this.i18n.nothingChange);
         } else {
             await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
         }
