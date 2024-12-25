@@ -3,9 +3,9 @@
 ## v0.3.0
 
 - 换用插件API更新块
-- 修复撤回失效问题
+- 修复撤回失效问题(#1)
 - Change to plugin API to update block
-- Fix withdraw failure issue
+- Fix withdraw failure issue(#1)
 
 ## v0.2.5
 
