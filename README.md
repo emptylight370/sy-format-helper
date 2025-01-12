@@ -23,6 +23,8 @@
 > - Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
 > - Be sure to back up your data, or save your content in a timely manner. Mishandling may lead to data loss, although it can be retracted, please use it with caution.
 
+Because of the duplication of functions, it is recommended to use the plugin "Text Process".
+
 ## How to use
 
 Select a block, open the block menu, find the format assistant in the plugin menu, and select the function you want to use.  
