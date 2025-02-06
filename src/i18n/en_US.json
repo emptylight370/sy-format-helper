@@ -12,5 +12,7 @@
   "codeBlockAdjIndex": "Code Block adjust indentation",
   "nothingChange": "Nothing Changed",
   "textBlockAddSpace": "Add space",
-  "needRefresh": "Need refersh to show change"
+  "needRefresh": "Need refersh to show change",
+  "textBlockUpperCase": "toUpperCase",
+  "textBlockLowerCase": "toLowerCase"
 }

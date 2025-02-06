@@ -91,7 +91,21 @@ export default class FormatHelper extends Plugin {
                 click: () => {
                     this.handleTextBlock(blockId, detail.protyle, "space");
                 }
-            })
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockUpperCase,
+                click: () => {
+                    this.handleTextBlock(blockId, detail.protyle, "upper");
+                }
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockLowerCase,
+                click: () => {
+                    this.handleTextBlock(blockId, detail.protyle, "lower");
+                }
+            });
         }
         if (submenu.length != 0) {
             menu.addItem({
@@ -99,7 +113,7 @@ export default class FormatHelper extends Plugin {
                 label: this.i18n.title,
                 type: "submenu",
                 submenu: submenu
-            })
+            });
         }
     }
     // !SECTION 添加点击菜单====================<
@@ -133,6 +147,12 @@ export default class FormatHelper extends Plugin {
         // 为数字和英文添加空格
         else if (type == "space")
             updated = this.addSpace(dom);
+        // 全字母大写
+        else if (type == "upper")
+            updated = this.upperCase(dom);
+        // 全字母小写
+        else if (type == "lower")
+            updated = this.lowerCase(dom);
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             showMessage(this.i18n.nothingChange);
         } else {
@@ -222,6 +242,80 @@ export default class FormatHelper extends Plugin {
                 }
             }
         });
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 英文全字母大写
+    private upperCase(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            showMessage(this.i18n.noTextFound, undefined, "error");
+            return dom;
+        }
+
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将文本内容转换为大写字母
+                    if (innerText && !skip) {
+                        innerText = innerText.toUpperCase();
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 英文全字母小写
+    private lowerCase(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            showMessage(this.i18n.noTextFound, undefined, "error");
+            return dom;
+        }
+
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将文本内容转换为大写字母
+                    if (innerText && !skip) {
+                        innerText = innerText.toLowerCase();
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
         dom.dom = doc.body.innerHTML;
         return dom;
     }

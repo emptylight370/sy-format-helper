@@ -12,5 +12,7 @@
   "codeBlockAdjIndex": "代码块调节缩进",
   "nothingChange": "未改变",
   "textBlockAddSpace": "添加空格",
-  "needRefresh": "需要手动刷新来显示修改"
+  "needRefresh": "需要手动刷新来显示修改",
+  "textBlockUpperCase": "字母转大写",
+  "textBlockLowerCase": "字母转小写"
 }
