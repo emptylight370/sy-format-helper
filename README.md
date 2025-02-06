@@ -7,6 +7,8 @@
 
 # Format Helper
 
+**Warning**: Because of the duplication of functions, it is recommend to use the plugin "Text Process". This plugin will remove from bazaar in several days. The repository link won't change.
+
 ## Functions
 
 - Remove all whitespace in paragraph
@@ -44,13 +46,14 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 
 ## Update Logs
 
+- v0.3.1
+  - Add toUpperCase and toLowerCase functions
+  - Remove from bazaar
 - v0.3.0
   - Change to plugin API to update block
   - Fix withdraw failure issue
 - v0.2.5
   - Fixed an issue where tags were accidentally handled
-- v0.2.2
-  - Fix error in add space
 
 # Thanks
 

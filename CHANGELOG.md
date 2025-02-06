@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.1
+
+- 添加全大写和全小写功能
+- 从集市下架
+- Add toUpperCase and toLowerCase functions
+- Remove from bazaar
+
 ## v0.3.0
 
 - 换用插件API更新块
