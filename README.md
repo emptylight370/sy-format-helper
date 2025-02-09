@@ -1,19 +1,18 @@
 [中文](https://github.com/emptylight370/sy-format-helper/blob/main/README_zh_CN.md)
 
-![GitHub Release Date](https://img.shields.io/github/release-date/emptylight370/sy-format-helper?display_date=published_at)
-![GitHub Release](https://img.shields.io/github/v/release/emptylight370/sy-format-helper)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/emptylight370/sy-format-helper/latest/total)
-![GitHub Repo stars](https://img.shields.io/github/stars/emptylight370/sy-format-helper)
+![GitHub Release Date](https://img.shields.io/github/release-date/emptylight370/sy-format-helper?display_date=published_at&link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper/releases/latest)
+![GitHub Release](https://img.shields.io/github/v/release/emptylight370/sy-format-helper?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper/releases/latest)
+![GitHub Downloads (all assets, latest releases)](https://img.shields.io/github/downloads/emptylight370/sy-format-helper/latest/total?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper)
+![GitHub Repo stars](https://img.shields.io/github/stars/emptylight370/sy-format-helper?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper)
 
 # Format Helper
-
-**Warning**: Because of the duplication of functions, it is recommend to use the plugin "Text Process". This plugin will remove from bazaar in several days. The repository link won't change.
 
 ## Functions
 
 - Remove all whitespace in paragraph
 - Keep only one blank space in a paragraph
 - Add whitespace before and after number and English char(similar with Optimize typography)
+- All chars toUpperCase and toLowerCase
 - TODO(such as process a document)
 - TODO(such as format code block)(I want to do but I may not be able to)
 
@@ -25,7 +24,7 @@
 > - Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
 > - Be sure to back up your data, or save your content in a timely manner. Mishandling may lead to data loss, although it can be retracted, please use it with caution.
 
-Because of the duplication of functions, it is recommended to use the plugin "Text Process".
+Because of the duplication of functions, it is recommended to use the plugin "Text Process". Enable by download `package.zip` to workspace/plugins folder.
 
 ## How to use
 
