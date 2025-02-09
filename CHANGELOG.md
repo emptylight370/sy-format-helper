@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.2
+
+- Update Readme
+
 ## v0.3.1
 
 - 添加全大写和全小写功能
