@@ -80,13 +80,6 @@ export default class FormatHelper extends Plugin {
             });
             submenu.push({
                 icon: "iconEdit",
-                label: this.i18n.textBlockKeepWhiteSpace,
-                click: () => {
-                    this.handleTextBlock(blockId, detail.protyle, "keep");
-                }
-            });
-            submenu.push({
-                icon: "iconEdit",
                 label: this.i18n.textBlockAddSpace,
                 click: () => {
                     this.handleTextBlock(blockId, detail.protyle, "space");
@@ -138,12 +131,9 @@ export default class FormatHelper extends Plugin {
             return
         }
         let updated;
-        // 移除所有空格
+        // 智能移除空格
         if (type == "remove")
-            updated = this.removeWriteSpace(dom, 0);
-        // 保留一个空格
-        else if (type == "keep")
-            updated = this.removeWriteSpace(dom, 1);
+            updated = this.removeWriteSpace(dom);
         // 为数字和英文添加空格
         else if (type == "space")
             updated = this.addSpace(dom);
@@ -167,7 +157,7 @@ export default class FormatHelper extends Plugin {
     }
 
     // NOTE - 移除空格
-    private removeWriteSpace(dom: { dom: string, id: string }, keep: 0 | 1) {
+    private removeWriteSpace(dom: { dom: string, id: string }) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(dom.dom, "text/html");
         let blockElements = doc.querySelectorAll('[data-node-id]');
@@ -193,10 +183,7 @@ export default class FormatHelper extends Plugin {
                     // console.log(innerText);
                     // 去除文本中的多余空格，但保留换行符
                     if (innerText && !skip) {
-                        if (keep == 0)
-                            innerText = innerText.replace(/[ \t\f\v]+/g, '').trim();
-                        else if (keep == 1)
-                            innerText = innerText.replace(/[ \t\f\v]+/g, ' ').trim();
+                        innerText = innerText.replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, '').trim();
                         // console.log(innerText);
                         node.nodeValue = innerText;
                     }
