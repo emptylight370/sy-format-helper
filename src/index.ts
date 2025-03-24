@@ -67,7 +67,18 @@ export default class FormatHelper extends Plugin {
                 icon: "iconInfo",
                 label: this.i18n.codeBlockAdjIndex,
                 click: () => {
+                    showMessage(this.i18n.codeBlockOnlyFirst);
+                    let blockId = blockElements[0].getAttribute('data-node-id');
                     this.handleCodeBlock(blockId, "indent");
+                }
+            });
+            submenu.push({
+                icon: "iconInfo",
+                label: this.i18n.codeBlockRmIndex,
+                click: () => {
+                    showMessage(this.i18n.codeBlockOnlyFirst);
+                    let blockId = blockElements[0].getAttribute('data-node-id');
+                    this.handleCodeBlock(blockId, "rindent");
                 }
             })
         } else {
@@ -370,6 +381,8 @@ export default class FormatHelper extends Plugin {
         if (type == "indent") {
             var newDom = this.codeBlockDecline(dom);
             newDom = this.codeBlockRise(newDom);
+        } else if (type == 'rindent') {
+            var newDom = this.codeBlockDecline(dom);
         }
         // 暂时抑制代码块操作
         newDom = null;
