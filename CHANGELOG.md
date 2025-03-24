@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4.0
+
+- 实现智能去除空格功能
+- 可以同时对多个块进行操作
+- Implement smart remove space function
+- Able to modify muti-block at once now
+
 ## v0.3.2
 
 - Update Readme

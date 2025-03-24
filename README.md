@@ -45,14 +45,15 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 
 ## Update Logs
 
+- v0.4.0
+  - Implement smart remove space function
+  - Able to modify muti-block at once now
 - v0.3.1
   - Add toUpperCase and toLowerCase functions
   - Remove from bazaar
 - v0.3.0
   - Change to plugin API to update block
   - Fix withdraw failure issue
-- v0.2.5
-  - Fixed an issue where tags were accidentally handled
 
 # Thanks
 

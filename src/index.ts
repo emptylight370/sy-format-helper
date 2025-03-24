@@ -21,7 +21,7 @@ import {
     Custom, exitSiYuan, getModelByDockType, getAllEditor, Files, platformUtils
 } from "siyuan";
 import "./index.scss";
-import { IMenuItem } from "siyuan/types";
+import { IMenuItem, IProtyle } from "siyuan/types";
 import * as api from "./api";
 
 export default class FormatHelper extends Plugin {
@@ -58,8 +58,8 @@ export default class FormatHelper extends Plugin {
     private addTextBlockItem({ detail }: any) {
         let menu: Menu = detail.menu;
         let submenu = [];
-        let protyle: HTMLElement = detail.blockElements[0];
-        let blockId = protyle.getAttribute('data-node-id');
+        let blockElements: HTMLElement[] = detail.blockElements;
+        let protyle = (detail.protyle as IProtyle).getInstance();
         let children = detail.blockElements[0].childNodes;
         // 判断选中块类型，目前只能快速分辨代码块
         if (Array.from(children).some(child => (child as HTMLElement).classList.contains('hljs'))) {
@@ -75,28 +75,76 @@ export default class FormatHelper extends Plugin {
                 icon: "iconEdit",
                 label: this.i18n.textBlockRmWhiteSpace,
                 click: () => {
-                    this.handleTextBlock(blockId, detail.protyle, "remove");
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "remove");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
                 }
             });
             submenu.push({
                 icon: "iconEdit",
                 label: this.i18n.textBlockAddSpace,
                 click: () => {
-                    this.handleTextBlock(blockId, detail.protyle, "space");
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "space");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
                 }
             });
             submenu.push({
                 icon: "iconEdit",
                 label: this.i18n.textBlockUpperCase,
                 click: () => {
-                    this.handleTextBlock(blockId, detail.protyle, "upper");
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "upper");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
                 }
             });
             submenu.push({
                 icon: "iconEdit",
                 label: this.i18n.textBlockLowerCase,
                 click: () => {
-                    this.handleTextBlock(blockId, detail.protyle, "lower");
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "lower");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
                 }
             });
         }
@@ -113,7 +161,7 @@ export default class FormatHelper extends Plugin {
 
     // SECTION 处理文本操作====================>
     // NOTE - 处理内容块菜单点击事件
-    private async handleTextBlock(blockId: string, protyle: Protyle["protyle"], type: string) {
+    private async handleTextBlock(blockId: string, protyle: Protyle, type: string) {
         // 获取块
         let dom: { dom: string, id: string } = await api.getDom(blockId);
         let origin = { dom: "", id: "" };
@@ -146,13 +194,7 @@ export default class FormatHelper extends Plugin {
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             showMessage(this.i18n.nothingChange);
         } else {
-            protyle.getInstance().updateTransaction(blockId, updated.dom, origin.dom);
-            let startTime = Date.now();
-            while (Date.now() - startTime < 1000) {
-                continue;
-            }
-            protyle.getInstance().reload(true);
-            showMessage(this.i18n.needRefresh);
+            protyle.updateTransaction(blockId, updated.dom, origin.dom);
         }
     }
 
