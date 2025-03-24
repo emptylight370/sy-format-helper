@@ -9,9 +9,13 @@
   "noParaFound": "无法获取当前段落文本",
   "idWrong": "选中块id与获取块id不匹配",
   "codeBlockAdjIndex": "代码块调节缩进",
+  "codeBlockOnlyFirst": "代码块仅处理第一个块",
+  "codeBlockRmIndex": "代码块移除缩进",
   "nothingChange": "未改变",
   "textBlockAddSpace": "添加空格",
   "needRefresh": "需要手动刷新来显示修改",
   "textBlockUpperCase": "字母转大写",
-  "textBlockLowerCase": "字母转小写"
+  "textBlockLowerCase": "字母转小写",
+  "textBlockFullToHalf": "全角字符转半角",
+  "textBlockHalfToFull": "半角字符转全角"
 }

@@ -9,9 +9,13 @@
   "noParaFound": "Can't get current paragraph",
   "idWrong": "The selected block id does not match the obtained block id",
   "codeBlockAdjIndex": "Code Block adjust indentation",
+  "codeBlockOnlyFirst": "Code Block only process first block",
+  "codeBlockRmIndex": "Code Block remove indentation",
   "nothingChange": "Nothing Changed",
   "textBlockAddSpace": "Add space",
   "needRefresh": "Need refersh to show change",
   "textBlockUpperCase": "toUpperCase",
-  "textBlockLowerCase": "toLowerCase"
+  "textBlockLowerCase": "toLowerCase",
+  "textBlockFullToHalf": "Full-width character to half-width",
+  "textBlockHalfToFull": "Half-width character to full-width"
 }

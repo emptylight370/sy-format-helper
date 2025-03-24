@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+- 添加全角字符转半角和半角字符转全角功能
+- Add full-width characters to half-width and half-width characters to full-width functions
+
 ## v0.4.0
 
 - 实现智能去除空格功能

@@ -158,6 +158,44 @@ export default class FormatHelper extends Plugin {
                     protyle.reload(true);
                 }
             });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockFullToHalf,
+                click: () => {
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "fullToHalf");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
+                }
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.textBlockHalfToFull,
+                click: () => {
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "halfToFull");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    let start = Date.now();
+                    while (protyle.isUploading()) {
+                        let now = Date.now();
+                        if (now - start > 5000) {
+                            break;
+                        }
+                    }
+                    protyle.reload(true);
+                }
+            });
         }
         if (submenu.length != 0) {
             menu.addItem({
@@ -202,6 +240,12 @@ export default class FormatHelper extends Plugin {
         // 全字母小写
         else if (type == "lower")
             updated = this.lowerCase(dom);
+        // 全角字符转半角字符
+        else if (type == "fullToHalf")
+            updated = this.toHalfChar(dom);
+        // 半角字符转全角字符
+        else if (type == "halfToFull")
+            updated = this.toFullChar(dom);
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             showMessage(this.i18n.nothingChange);
         } else {
@@ -347,9 +391,87 @@ export default class FormatHelper extends Plugin {
                     if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
                         skip = true;
                     }
-                    // 将文本内容转换为大写字母
+                    // 将文本内容转换为小写字母
                     if (innerText && !skip) {
                         innerText = innerText.toLowerCase();
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 全角字符转换为半角字符
+    private toHalfChar(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            showMessage(this.i18n.noTextFound, undefined, "error");
+            return dom;
+        }
+
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将全角字符转换为半角字符
+                    if (innerText && !skip) {
+                        innerText = innerText.replace(/[\uff01-\uff5e]/g, function (match) {
+                            return String.fromCharCode(match.charCodeAt(0) - 0xFEE0);
+                        }).replace(/\u3000/g, ' ');
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 半角字符转换为全角字符
+    private toFullChar(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            showMessage(this.i18n.noTextFound, undefined, "error");
+            return dom;
+        }
+
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将半角字符转换为全角字符
+                    if (innerText && !skip) {
+                        innerText = innerText.replace(/[\u0021-\u007e]/g, function (match) {
+                            return String.fromCharCode(match.charCodeAt(0) + 0xFEE0);
+                        }).replace(/ /g, '\u3000');
                         node.nodeValue = innerText;
                     }
                 }

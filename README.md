@@ -45,15 +45,14 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 
 ## Update Logs
 
+- v0.4.1
+  - Add full-width characters to half-width and half-width characters to full-width functions
 - v0.4.0
   - Implement smart remove space function
   - Able to modify muti-block at once now
 - v0.3.1
   - Add toUpperCase and toLowerCase functions
   - Remove from bazaar
-- v0.3.0
-  - Change to plugin API to update block
-  - Fix withdraw failure issue
 
 # Thanks
 
