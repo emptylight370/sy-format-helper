@@ -27,7 +27,7 @@ import * as api from "./api";
 export default class FormatHelper extends Plugin {
 
     private custom: () => Custom;
-    private isMobile: boolean;
+    private isMobile: boolean = getBackend() == "android" || getBackend() == "harmony" || getBackend() == "ios";
     private appId = this.app.appId;
 
     // 加载完成
