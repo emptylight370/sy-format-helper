@@ -17,5 +17,7 @@
   "textBlockUpperCase": "toUpperCase",
   "textBlockLowerCase": "toLowerCase",
   "textBlockFullToHalf": "Full-width character to half-width",
-  "textBlockHalfToFull": "Half-width character to full-width"
+  "textBlockHalfToFull": "Half-width character to full-width",
+  "lawAddSpace": "Add space for law (章、节、条)",
+  "lawIncludeFullSpace": "Including full-width space to half-width space(full-width may not visible)"
 }

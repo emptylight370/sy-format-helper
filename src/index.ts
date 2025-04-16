@@ -91,14 +91,19 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "remove");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
             submenu.push({
@@ -110,14 +115,19 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "space");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
             submenu.push({
@@ -129,14 +139,19 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "upper");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
             submenu.push({
@@ -148,14 +163,19 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "lower");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
             submenu.push({
@@ -167,14 +187,19 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "fullToHalf");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
             submenu.push({
@@ -186,14 +211,43 @@ export default class FormatHelper extends Plugin {
                         await this.handleTextBlock(blockId, protyle, "halfToFull");
                     });
                     showMessage(this.i18n.needRefresh);
-                    let start = Date.now();
-                    while (protyle.isUploading()) {
-                        let now = Date.now();
-                        if (now - start > 5000) {
-                            break;
-                        }
-                    }
-                    protyle.reload(true);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
+                }
+            });
+            submenu.push({
+                icon: "iconEdit",
+                label: this.i18n.lawAddSpace,
+                click: () => {
+                    blockElements.forEach(async blockElement => {
+                        let blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, "law");
+                    });
+                    showMessage(this.i18n.needRefresh);
+                    // let start = Date.now();
+                    // while (true) {
+                    //     let now = Date.now();
+                    //     if (protyle.protyle.updated) {
+                    //         break;
+                    //     }
+                    //     if (now - start > 5000) {
+                    //         break;
+                    //     } else {
+                    //         setTimeout(() => { }, 500);
+                    //     }
+                    // }
+                    // protyle.reload(true);
                 }
             });
         }
@@ -246,9 +300,14 @@ export default class FormatHelper extends Plugin {
         // 半角字符转全角字符
         else if (type == "halfToFull")
             updated = this.toFullChar(dom);
+        // 法律法规（章、节、条）后添加空格
+        else if (type == 'law')
+            updated = this.lawAddSpace(dom);
         if (updated == null || updated == undefined || updated.dom === origin.dom && updated.id === origin.id) {
             showMessage(this.i18n.nothingChange);
         } else {
+            if (type == 'law')
+                showMessage(this.i18n.lawIncludeFullSpace);
             protyle.updateTransaction(blockId, updated.dom, origin.dom);
         }
     }
@@ -478,6 +537,40 @@ export default class FormatHelper extends Plugin {
             }
         });
 
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 法律法规（章、节、条）添加空格
+    private lawAddSpace(dom: { dom: string, id: string }) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(dom.dom, "text/html");
+        let blockElements = doc.querySelectorAll('[data-node-id]');
+        if (blockElements.length === 0) {
+            console.warn("No block elements found.");
+            showMessage(this.i18n.noTextFound, undefined, "error");
+            return dom;
+        }
+        blockElements.forEach(blockElement => {
+            let editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while (node = walker.nextNode()) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 为章、节、条后添加空格
+                    if (innerText && !skip) {
+                        innerText = innerText.replace(/\u3000/g, ' ').replace(/(第.*?[编章节条])(?!\s)/g, '$1 ').trim();
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
         dom.dom = doc.body.innerHTML;
         return dom;
     }

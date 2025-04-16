@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.2
+
+- 添加了法律法规条目后增加空格功能
+- Added functionality to add spaces after legal article entries
+
 ## v0.4.1
 
 - 添加全角字符转半角和半角字符转全角功能
