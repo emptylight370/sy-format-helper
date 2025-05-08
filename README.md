@@ -7,6 +7,12 @@
 
 # Format Helper
 
+## How to install
+
+Download latest `package.zip` file from [GitHub Releases](https://github.com/emptylight370/sy-format-helper/releases/latest), and extract to `workspace/data/plugins` directory of the workspace which you want to install the plugin, and rename the `package` folder to `sy-format-helper`, then enable this plugin in SiYuan's plugin panel.
+
+Download the latest Release file when you updating the plugin, and replace the files in the `sy-format-helper` folder(you can clear the folder first), then re-enable this plugin. You can observe whether there is update via the badge in the plguin README docs.
+
 ## Functions
 
 - Remove all whitespace in paragraph
