@@ -31,10 +31,7 @@ import * as api from "./api";
 
 export default class FormatHelper extends Plugin {
     private custom: () => Custom;
-    private isMobile: boolean =
-        getBackend() == "android" ||
-        getBackend() == "harmony" ||
-        getBackend() == "ios";
+    private isMobile: boolean = getBackend() == "android" || getBackend() == "harmony" || getBackend() == "ios";
     private appId = this.app.appId;
 
     // 加载完成
@@ -69,11 +66,7 @@ export default class FormatHelper extends Plugin {
         let protyle = (detail.protyle as IProtyle).getInstance();
         let children = detail.blockElements[0].childNodes;
         // 判断选中块类型，目前只能快速分辨代码块
-        if (
-            Array.from(children).some((child) =>
-                (child as HTMLElement).classList.contains("hljs"),
-            )
-        ) {
+        if (Array.from(children).some((child) => (child as HTMLElement).classList.contains("hljs"))) {
             submenu.push({
                 icon: "iconInfo",
                 label: this.i18n.codeBlockAdjIndex,
@@ -195,11 +188,7 @@ export default class FormatHelper extends Plugin {
                 click: () => {
                     blockElements.forEach(async (blockElement) => {
                         let blockId = blockElement.getAttribute("data-node-id");
-                        await this.handleTextBlock(
-                            blockId,
-                            protyle,
-                            "fullToHalf",
-                        );
+                        await this.handleTextBlock(blockId, protyle, "fullToHalf");
                     });
                     showMessage(this.i18n.needRefresh);
                     // let start = Date.now();
@@ -223,11 +212,7 @@ export default class FormatHelper extends Plugin {
                 click: () => {
                     blockElements.forEach(async (blockElement) => {
                         let blockId = blockElement.getAttribute("data-node-id");
-                        await this.handleTextBlock(
-                            blockId,
-                            protyle,
-                            "halfToFull",
-                        );
+                        await this.handleTextBlock(blockId, protyle, "halfToFull");
                     });
                     showMessage(this.i18n.needRefresh);
                     // let start = Date.now();
@@ -283,11 +268,7 @@ export default class FormatHelper extends Plugin {
 
     // SECTION 处理文本操作====================>
     // NOTE - 处理内容块菜单点击事件
-    private async handleTextBlock(
-        blockId: string,
-        protyle: Protyle,
-        type: string,
-    ) {
+    private async handleTextBlock(blockId: string, protyle: Protyle, type: string) {
         // 获取块
         let dom: { dom: string; id: string } = await api.getDom(blockId);
         let origin = { dom: "", id: "" };
@@ -319,11 +300,7 @@ export default class FormatHelper extends Plugin {
         else if (type == "halfToFull") updated = this.toFullChar(dom);
         // 法律法规（章、节、条）后添加空格
         else if (type == "law") updated = this.lawAddSpace(dom);
-        if (
-            updated == null ||
-            updated == undefined ||
-            (updated.dom === origin.dom && updated.id === origin.id)
-        ) {
+        if (updated == null || updated == undefined || (updated.dom === origin.dom && updated.id === origin.id)) {
             showMessage(this.i18n.nothingChange);
         } else {
             if (type == "law") showMessage(this.i18n.lawIncludeFullSpace);
@@ -344,36 +321,21 @@ export default class FormatHelper extends Plugin {
         }
 
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // console.log(innerText);
                     // 去除文本中的多余空格，但保留换行符
                     if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(
-                                /(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g,
-                                "",
-                            )
-                            .trim();
+                        innerText = innerText.replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, "").trim();
                         // console.log(innerText);
                         node.nodeValue = innerText;
                     }
@@ -399,41 +361,21 @@ export default class FormatHelper extends Plugin {
             return dom;
         }
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 匹配数字和英文，添加空格
                     if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(
-                                /([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g,
-                                "$1 $2",
-                            )
-                            .trim();
-                        innerText = innerText
-                            .replace(
-                                /([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g,
-                                "$1 $2",
-                            )
-                            .trim();
+                        innerText = innerText.replace(/([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g, "$1 $2").trim();
+                        innerText = innerText.replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, "$1 $2").trim();
                         node.nodeValue = innerText;
                     }
                 }
@@ -456,25 +398,15 @@ export default class FormatHelper extends Plugin {
         }
 
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 将文本内容转换为大写字母
@@ -503,25 +435,15 @@ export default class FormatHelper extends Plugin {
         }
 
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 将文本内容转换为小写字母
@@ -550,34 +472,22 @@ export default class FormatHelper extends Plugin {
         }
 
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 将全角字符转换为半角字符
                     if (innerText && !skip) {
                         innerText = innerText
                             .replace(/[\uff01-\uff5e]/g, function (match) {
-                                return String.fromCharCode(
-                                    match.charCodeAt(0) - 0xfee0,
-                                );
+                                return String.fromCharCode(match.charCodeAt(0) - 0xfee0);
                             })
                             .replace(/\u3000/g, " ");
                         node.nodeValue = innerText;
@@ -603,34 +513,22 @@ export default class FormatHelper extends Plugin {
         }
 
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 将半角字符转换为全角字符
                     if (innerText && !skip) {
                         innerText = innerText
                             .replace(/[\u0021-\u007e]/g, function (match) {
-                                return String.fromCharCode(
-                                    match.charCodeAt(0) + 0xfee0,
-                                );
+                                return String.fromCharCode(match.charCodeAt(0) + 0xfee0);
                             })
                             .replace(/ /g, "\u3000");
                         node.nodeValue = innerText;
@@ -654,25 +552,15 @@ export default class FormatHelper extends Plugin {
             return dom;
         }
         blockElements.forEach((blockElement) => {
-            let editable = blockElement.querySelector(
-                "div[contenteditable=true]",
-            );
+            let editable = blockElement.querySelector("div[contenteditable=true]");
             if (editable) {
-                let walker = document.createTreeWalker(
-                    editable,
-                    NodeFilter.SHOW_TEXT,
-                    null,
-                );
+                let walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
                 let node;
                 while ((node = walker.nextNode())) {
                     let innerText = node.nodeValue;
                     let skip = false;
                     // 跳过tag
-                    if (
-                        (node.parentNode as HTMLElement).getAttribute(
-                            "data-type",
-                        ) == "tag"
-                    ) {
+                    if ((node.parentNode as HTMLElement).getAttribute("data-type") == "tag") {
                         skip = true;
                     }
                     // 为章、节、条后添加空格
@@ -721,12 +609,7 @@ export default class FormatHelper extends Plugin {
         if (newDom == null || newDom == undefined || newDom === dom) {
             showMessage(this.i18n.nothingChange);
         } else {
-            await api.updateBlockTransactions(
-                blockId,
-                this.appId,
-                dom.dom,
-                newDom.dom,
-            );
+            await api.updateBlockTransactions(blockId, this.appId, dom.dom, newDom.dom);
         }
     }
 
