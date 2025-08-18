@@ -4,6 +4,10 @@
   "description": "SiYuan format helper",
   "main": ".src/index.js",
   "packageManager": "pnpm@10.14.0",
+  "volta": {
+    "node": "22.16.0",
+    "pnpm": "10.14.0"
+  },
   "scripts": {
     "lint": "eslint . --fix --cache",
     "dev": "webpack --mode development",
