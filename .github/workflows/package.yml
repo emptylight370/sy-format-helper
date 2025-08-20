@@ -19,22 +19,22 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
-      - name: install deps
+      - name: Install deps
         run: pnpm i
 
-      - name: install jq
-        run: sudo apt-get install jq
+      - name: Get current version
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: 'jq -r ".version" plugin.json'
 
-      - name: create tag
-        run: echo "VERSION=$(jq -r ".version" plugin.json)" >> $GITHUB_ENV
-
-      - name: package
+      - name: Package
         run: pnpm build
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: package.zip
-          name: Release ${{ env.VERSION }}
-          tag_name: ${{ env.VERSION }}
+          name: Release ${{ steps.version.outputs.value }}
+          tag_name: ${{ steps.version.outputs.value }}
           make_latest: true
