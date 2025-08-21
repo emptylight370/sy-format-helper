@@ -1,32 +1,32 @@
-import { fetchSyncPost, IWebSocketData, Lute } from "siyuan";
+import { fetchSyncPost, IWebSocketData, Lute } from 'siyuan';
 
 // 发送请求并获得返回结果
 export async function request(url: string, data?: any) {
     let response: IWebSocketData = await fetchSyncPost(url, data);
-    let res = response.code == 0 ? response.data : null;
+    let res = response.code === 0 ? response.data : null;
     return res;
 }
 
 // 获取块karmdown源码
 export async function getKramdown(id: string) {
     let data = { id: id };
-    return request("/api/block/getBlockKramdown", data);
+    return request('/api/block/getBlockKramdown', data);
 }
 
 // 获取块DOM
 export async function getDom(id: string) {
     let data = { id: id };
-    return request("/api/block/getBlockDOM", data);
+    return request('/api/block/getBlockDOM', data);
 }
 
 export async function getCurrentTime() {
-    return request("/api/system/currentTime");
+    return request('/api/system/currentTime');
 }
 
 // 更新块
 export async function updateBlock(id: string, markdown: string) {
-    let data = { id: id, data: markdown, dataType: "markdown" };
-    return request("/api/block/updateBlock", data);
+    let data = { id: id, data: markdown, dataType: 'markdown' };
+    return request('/api/block/updateBlock', data);
 }
 
 // 通过事务更新块，可撤回，应该是只支持DOM
@@ -36,21 +36,21 @@ export async function updateBlockTransactions(nodeId: string, appId: string, ori
         {
             doOperations: [
                 {
-                    action: "update",
+                    action: 'update',
                     id: nodeId,
                     data: updated,
                 },
             ],
             undoOperations: [
                 {
-                    action: "update",
+                    action: 'update',
                     id: nodeId,
                     data: original,
                 },
             ],
         },
     ];
-    return request("/api/transactions", {
+    return request('/api/transactions', {
         session: appId,
         app: appId,
         reqId: nowTime,
@@ -60,19 +60,19 @@ export async function updateBlockTransactions(nodeId: string, appId: string, ori
 
 // 刷新数据库提交事务
 export async function refreshSQL() {
-    return request("/api/sqlite/flushTransaction");
+    return request('/api/sqlite/flushTransaction');
 }
 
 // 弹出通知
 export async function sendMessage(message: string, timeout?: number) {
     let data = { msg: message, timeout: timeout };
-    return request("/api/notification/pushMsg", data);
+    return request('/api/notification/pushMsg', data);
 }
 
 // 弹出报错
 export async function sendError(message: string, timeout?: number) {
     let data = { msg: message, timeout: timeout };
-    return request("/api/notification/pushErrMsg", data);
+    return request('/api/notification/pushErrMsg', data);
 }
 
 // 获取到思源用于转换markdown和DOM的编辑器
