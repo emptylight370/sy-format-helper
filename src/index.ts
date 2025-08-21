@@ -4,29 +4,18 @@ import {
     confirm,
     Dialog,
     Menu,
-    openTab,
-    adaptHotkey,
     getFrontend,
     getBackend,
     Setting,
     fetchPost,
     Protyle,
-    openWindow,
     IOperation,
     Constants,
-    openMobileFileById,
-    lockScreen,
-    ICard,
-    ICardData,
     Custom,
-    exitSiYuan,
-    getModelByDockType,
     getAllEditor,
-    Files,
-    platformUtils,
 } from 'siyuan';
 import './index.scss';
-import { IMenuItem, IProtyle } from 'siyuan/types';
+import { IProtyle } from 'siyuan/types';
 import * as api from './api';
 
 export default class FormatHelper extends Plugin {
