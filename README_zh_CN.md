@@ -25,8 +25,9 @@
 ## 注意
 
 > 操作可能会导致**意外变化**。目前可以通过撤销键来撤销上一步操作。
-> 
+>
 > **警告**❗：
+>
 > - 仅有列出的功能比较稳定，文档未列出的功能即使有入口也不能保证数据完整。
 > - 一定要做好数据备份，或者及时保存内容。误操作有可能导致数据丢失，尽管可以撤回，但请谨慎使用。
 
@@ -51,20 +52,19 @@
 
 ## 更新日志
 
+- v0.4.3
+  - 在发布服务中禁用
 - v0.4.2
   - 添加了法律法规条目后增加空格功能
 - v0.4.1
   - 添加全角字符转半角和半角字符转全角功能
-- v0.4.0
-  - 实现智能去除空格功能
-  - 可以同时对多个块进行操作
 
 # 感谢
 
-| 仓库 | 作者 | 内容 | 许可证 |
-| --- | --- | --- | --- |
-| 无 | [player](https://ld246.com/member/player) | [回帖](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | 无 |
-| 无 | [Achuan-2](https://ld246.com/member/Achuan-2) | [回帖](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments) | 无 |
-| 无 | [Frostime](https://ld246.com/member/Frostime) | [插件开发 Quick Start](https://ld246.com/article/1723732790981) | 无 |
-| [思源API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | 思源开发者们 | 思源API | AGPL3.0 |
-| [转移引用](https://github.com/frostime/sy-transfer-refs) | [Frostime](https://github.com/frostime) | [向思源发送API请求的方式](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT |
+| 仓库                                                                      | 作者                                          | 内容                                                                                         | 许可证  |
+| ------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------- | ------- |
+| 无                                                                        | [player](https://ld246.com/member/player)     | [回帖](https://ld246.com/article/1734443320794/comment/1734444819260#comments)               | 无      |
+| 无                                                                        | [Achuan-2](https://ld246.com/member/Achuan-2) | [回帖](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments)  | 无      |
+| 无                                                                        | [Frostime](https://ld246.com/member/Frostime) | [插件开发 Quick Start](https://ld246.com/article/1723732790981)                              | 无      |
+| [思源API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | 思源开发者们                                  | 思源API                                                                                      | AGPL3.0 |
+| [转移引用](https://github.com/frostime/sy-transfer-refs)                  | [Frostime](https://github.com/frostime)       | [向思源发送API请求的方式](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT     |

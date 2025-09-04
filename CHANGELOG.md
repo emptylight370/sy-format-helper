@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.3
+
+- 在发布服务中禁用
+- Disable in Publish mode
+
 ## v0.4.2
 
 - 添加了法律法规条目后增加空格功能

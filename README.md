@@ -27,6 +27,7 @@ Download the latest Release file when you updating the plugin, and replace the f
 > Actions may result in **unexpected changes**. Currently, you can undo the previous operation by using the undo key.
 >
 > **Warning**❗:
+>
 > - Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
 > - Be sure to back up your data, or save your content in a timely manner. Mishandling may lead to data loss, although it can be retracted, please use it with caution.
 
@@ -51,20 +52,19 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 
 ## Update Logs
 
+- v0.4.3
+  - Disable in Publish mode
 - v0.4.2
   - Added functionality to add spaces after legal article entries
 - v0.4.1
   - Add full-width characters to half-width and half-width characters to full-width functions
-- v0.4.0
-  - Implement smart remove space function
-  - Able to modify muti-block at once now
 
 # Thanks
 
-| Repo | Author | Content | LICENSE |
-| --- | --- | --- | --- |
-| None | [player](https://ld246.com/member/player) | [Reply](https://ld246.com/article/1734443320794/comment/1734444819260#comments) | None |
-| None | [Achuan-2](https://ld246.com/member/Achuan-2) | [Reply](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments) | None |
-| None | [Frostime](https://ld246.com/member/Frostime) | [PLugin Development Quick Start](https://ld246.com/article/1723732790981) | None |
-| [SiYuan API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | SiYuan Developers | SiYuan API | AGPL3.0 |
-| [Transfer refs](https://github.com/frostime/sy-transfer-refs) | [Frostime](https://github.com/frostime) | [The way to contact SiYuan API](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT |
+| Repo                                                                         | Author                                        | Content                                                                                            | LICENSE |
+| ---------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------- |
+| None                                                                         | [player](https://ld246.com/member/player)     | [Reply](https://ld246.com/article/1734443320794/comment/1734444819260#comments)                    | None    |
+| None                                                                         | [Achuan-2](https://ld246.com/member/Achuan-2) | [Reply](https://ld246.com/article/1734443320794/comment/1734451724612?r=EmptyLight#comments)       | None    |
+| None                                                                         | [Frostime](https://ld246.com/member/Frostime) | [PLugin Development Quick Start](https://ld246.com/article/1723732790981)                          | None    |
+| [SiYuan API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | SiYuan Developers                             | SiYuan API                                                                                         | AGPL3.0 |
+| [Transfer refs](https://github.com/frostime/sy-transfer-refs)                | [Frostime](https://github.com/frostime)       | [The way to contact SiYuan API](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT     |

@@ -4,6 +4,7 @@
   "url": "https://github.com/emptylight370/sy-format-helper",
   "version": "0.4.3",
   "minAppVersion": "2.0.25",
+  "disabledInPublish": true,
   "backends": [
     "windows",
     "linux",
