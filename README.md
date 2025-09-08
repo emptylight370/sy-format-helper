@@ -52,7 +52,7 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 
 ## Update Logs
 
-- v0.4.3
+- v0.4.4
   - Disable in Publish mode
 - v0.4.2
   - Added functionality to add spaces after legal article entries

@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.4.3
+## v0.4.4
 
 - 在发布服务中禁用
 - Disable in Publish mode
