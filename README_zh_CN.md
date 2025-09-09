@@ -2,7 +2,7 @@
 
 ![GitHub Release Date](https://img.shields.io/github/release-date/emptylight370/sy-format-helper?display_date=published_at&link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper/releases/latest)
 ![GitHub Release](https://img.shields.io/github/v/release/emptylight370/sy-format-helper?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper/releases/latest)
-![GitHub Downloads (all assets, latest releases)](https://img.shields.io/github/downloads/emptylight370/sy-format-helper/latest/total?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper)
+![GitHub issue custom search in repo](https://img.shields.io/github/issues-search/emptylight370/sy-format-helper?query=state%3Aopen%20label%3A%22help%20wanted%22&label=Issues%20need%20helps&labelColor=%23112E32)
 ![GitHub Repo stars](https://img.shields.io/github/stars/emptylight370/sy-format-helper?link=https%3A%2F%2Fgithub.com%2Femptylight370%2Fsy-format-helper)
 
 # 格式助手
