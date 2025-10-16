@@ -13,9 +13,10 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Close issue on check
+        id: close
         if: contains(github.event.issue.body, '- [X] I didn''t check all the checkboxes')
         uses: actions-cool/issues-helper@v3
         with:
@@ -26,7 +27,8 @@ jobs:
             这个议题因为应被关闭而被关闭了。如果你想要重新打开它，请编辑并检查你的议题再重新打开它。
 
       - name: Comment issue on not check
-        if: contains(github.event.issue.body, '- [ ] I didn''t check all the checkboxes')
+        id: comment
+        if: contains(github.event.issue.body, '- [ ] I didn''t check all the checkboxes') && steps.close.outcome == 'skipped'
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment,remove-labels,add-assignees'
@@ -37,7 +39,7 @@ jobs:
             感谢提交议题。你的议题会在几天内检查。
 
       - name: Comment issue on no checkbox
-        if: contains(github.event.issue.body, '- [ ] I didn''t check all the checkboxes') == false && contains(github.event.issue.body, '- [X] I didn''t check all the checkboxes') == false
+        if: steps.close.outcome == 'skipped' && steps.comment.outcome == 'skipped'
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment,add-labels,add-assignees'
