@@ -9,9 +9,18 @@
 
 ## 如何安装
 
+### 手动安装
+
 从 [GitHub Releases](https://github.com/emptylight370/sy-format-helper/releases/latest) 中下载最新的 `package.zip` 文件，并且解压到要安装的 `工作空间/data/plugins` 目录下，将解压出的 `package` 文件夹重命名为 `sy-format-helper`，之后在思源的插件面板中启用本插件。
 
 更新时仍然下载最新的 Release 文件，并且替换 `sy-format-helper` 文件夹中的文件（可先清空文件夹），之后重新启用本插件。可通过插件说明文档中的 badge 观察是否存在更新。
+
+### 自动安装
+
+1. 在集市中下载[安装集市包](https://github.com/TCOTC/install-package)插件
+2. 点击插件按钮打开安装面板
+3. 复制本仓库网址，并粘贴到插件输入框中
+4. 点击确定按钮安装
 
 ## 功能
 
