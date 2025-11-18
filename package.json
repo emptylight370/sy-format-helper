@@ -3,10 +3,10 @@
   "version": "0.4.3",
   "description": "SiYuan format helper",
   "main": ".src/index.js",
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.20.0",
   "volta": {
-    "node": "22.21.0",
-    "pnpm": "10.19.0"
+    "node": "22.21.1",
+    "pnpm": "10.22.0"
   },
   "scripts": {
     "lint": "eslint . --fix --cache",
@@ -18,19 +18,19 @@
   "author": "Emptylight",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "8.46.2",
-    "@typescript-eslint/parser": "8.46.2",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "esbuild-loader": "^4.4.0",
-    "eslint": "^9.38.0",
-    "mini-css-extract-plugin": "2.9.4",
+    "eslint": "^9.39.1",
+    "mini-css-extract-plugin": "^2.9.4",
     "prettier": "^3.6.2",
-    "sass": "^1.93.2",
+    "sass": "^1.94.1",
     "sass-loader": "^16.0.6",
-    "siyuan": "1.1.5",
-    "tslib": "2.8.1",
-    "typescript": "5.9.2",
+    "siyuan": "^1.1.5",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
     "zip-webpack-plugin": "^4.0.3"
