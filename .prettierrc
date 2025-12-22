@@ -8,6 +8,13 @@
       "options": {
         "tabWidth": 4
       }
+    },
+    {
+      "files": [".vscode/*"],
+      "options": {
+        "tabWidth": 4,
+        "singleQuote": false
+      }
     }
   ]
 }
