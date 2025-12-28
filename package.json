@@ -3,11 +3,7 @@
   "version": "0.4.3",
   "description": "SiYuan format helper",
   "main": ".src/index.js",
-  "packageManager": "pnpm@10.26.1",
-  "volta": {
-    "node": "24.12.0",
-    "pnpm": "10.26.1"
-  },
+  "packageManager": "pnpm@10.26.2",
   "scripts": {
     "lint": "eslint . --fix --cache",
     "format": "prettier -w src README.md README_zh_CN.md",
@@ -21,8 +17,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
-    "@typescript-eslint/eslint-plugin": "^8.50.0",
-    "@typescript-eslint/parser": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "esbuild-loader": "^4.4.1",
@@ -33,7 +29,7 @@
     "prettier": "^3.7.4",
     "sass": "^1.97.1",
     "sass-loader": "^16.0.6",
-    "siyuan": "^1.1.6",
+    "siyuan": "^1.1.7",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "webpack": "^5.104.1",
