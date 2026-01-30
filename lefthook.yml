@@ -5,3 +5,10 @@ pre-commit:
         - run: npx prettier -c src README.md README_zh_CN.md
       run: pnpm run format
       stage_fixed: true
+
+    - name: Generate changelog
+      skip:
+        # 仅在提交了theme.json的时候执行
+        - run: test $(git diff --name-only --cached | grep -c 'plugin\.json') -eq 0
+      run: mise run changelog
+      fail_text: "请检查依赖安装状态，运行mise install安装依赖"

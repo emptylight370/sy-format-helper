@@ -34,8 +34,8 @@
 ## 注意
 
 > 操作可能会导致**意外变化**。目前可以通过撤销键来撤销上一步操作。
->
-> **警告**❗：
+
+> [!WARNING]
 >
 > - 仅有列出的功能比较稳定，文档未列出的功能即使有入口也不能保证数据完整。
 > - 一定要做好数据备份，或者及时保存内容。误操作有可能导致数据丢失，尽管可以撤回，但请谨慎使用。
@@ -60,6 +60,9 @@
 - 超级块
 
 ## 更新日志
+
+> 完整[更新日志](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
+> 完整[提交记录](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
 - v0.4.4
   - 在发布服务中禁用

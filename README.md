@@ -34,8 +34,8 @@ Download the latest Release file when you updating the plugin, and replace the f
 ## Notice
 
 > Actions may result in **unexpected changes**. Currently, you can undo the previous operation by using the undo key.
->
-> **Warning**❗:
+
+> [!WARNING]
 >
 > - Only the listed features are a little more stable, and the features not listed in the documentation do not guarantee data integrity even if they have an entry.
 > - Be sure to back up your data, or save your content in a timely manner. Mishandling may lead to data loss, although it can be retracted, please use it with caution.
@@ -60,6 +60,9 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 - super block
 
 ## Update Logs
+
+> Complete [changelog](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
+> Complete [commit history](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
 - v0.4.4
   - Disable in Publish mode
