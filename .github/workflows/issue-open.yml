@@ -20,8 +20,9 @@ jobs:
         if: contains(github.event.issue.body, '- [X] I didn''t check all the checkboxes')
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment,add-labels,close-issue'
+          actions: 'create-comment,add-labels,close-issue,remove-assignees'
           labels: 'invalid'
+          assignees: 'emptylight370'
           body: |
             The issue is closed because it should be. If you want to re-open it, please edit and check your issue then re-open it.
             这个议题因为应被关闭而被关闭了。如果你想要重新打开它，请编辑并检查你的议题再重新打开它。
