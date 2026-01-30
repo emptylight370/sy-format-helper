@@ -213,7 +213,6 @@ dist
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
@@ -265,3 +264,6 @@ index.css
 index.js
 /i18n
 scripts/*
+mise.local.toml
+lefthook-local.yml
+.lefthook-local/**/*

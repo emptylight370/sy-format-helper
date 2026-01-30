@@ -1,0 +1,7 @@
+pre-commit:
+  jobs:
+    - name: Format code with prettier
+      skip:
+        - run: npx prettier -c src README.md README_zh_CN.md
+      run: pnpm run format
+      stage_fixed: true
