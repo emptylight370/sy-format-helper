@@ -27,7 +27,6 @@
     "globals": "^17.3.0",
     "mini-css-extract-plugin": "^2.10.0",
     "prettier": "^3.8.1",
-    "prettier-plugin-toml": "^2.0.6",
     "sass": "^1.97.3",
     "sass-loader": "^16.0.6",
     "siyuan": "^1.1.7",
