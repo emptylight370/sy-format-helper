@@ -9,7 +9,7 @@ pre-commit:
 
     - name: Generate changelog
       skip:
-        # 仅在提交了theme.json的时候执行
-        - run: test $(git diff --name-only --cached | grep -c 'plugin\.json') -eq 0
+        # 仅在修改了version的时候执行
+        - run: $(! git diff --cached -U0 'plugin.json' | grep -q -F 'version')
       run: mise run changelog
-      fail_text: "请检查依赖安装状态，运行mise install安装依赖"
+      fail_text: '请检查依赖安装状态，运行mise install安装依赖'
