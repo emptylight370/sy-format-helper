@@ -3,7 +3,9 @@ name: Package
 on:
   push:
     paths:
-      - 'plugin.json'
+      - plugin.json
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -26,10 +28,11 @@ jobs:
         run: pnpm i
 
       - name: Get current version
-        uses: sergeysova/jq-action@v2
+        uses: flex-development/jq-action@main
         id: version
         with:
-          cmd: 'jq -r ".version" plugin.json'
+          data: plugin.json
+          filter: .version
 
       - name: Package
         run: pnpm build
@@ -43,7 +46,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: package.zip
-          name: Release ${{ steps.version.outputs.value }}
-          tag_name: ${{ steps.version.outputs.value }}
+          name: Release ${{ steps.version.outputs.result }}
+          tag_name: ${{ steps.version.outputs.result }}
           make_latest: true
           body_path: release.md
