@@ -1,3 +1,29 @@
+## [0.4.5](https://github.com/emptylight370/sy-format-helper/compare/0.4.4...0.4.5) (2026-02-17)
+
+### ✨ Features | 功能
+
+- 在发布更新时生成更新日志 ([29928f1](https://github.com/emptylight370/sy-format-helper/commit/29928f13d2b84cdc3460087c8dbbddab790abcaf))
+- Update deps ([9ea99fe](https://github.com/emptylight370/sy-format-helper/commit/9ea99fe5c1a2400570f576e2f6240ec9e20b30d8))
+- Update deps ([d529b18](https://github.com/emptylight370/sy-format-helper/commit/d529b186914909c2354a9d056c590b2556e32510))
+
+### 📄 Documentation | 文档
+
+- 更新安装说明 ([3e11ece](https://github.com/emptylight370/sy-format-helper/commit/3e11eceee4a9dfdbbad5cf123494ef4c4d0f8397))
+- 将下载数量改为需要帮助的议题数量 ([38fff3e](https://github.com/emptylight370/sy-format-helper/commit/38fff3eb653c20a12088903587eeeff505f39023))
+
+### 🛠️ Build system | 构建系统
+
+- 更新工作流和项目依赖 ([a279c46](https://github.com/emptylight370/sy-format-helper/commit/a279c462bbaecf7ea5b67234c35fef5320f2df56))
+- 更新依赖环境 ([23ea2ae](https://github.com/emptylight370/sy-format-helper/commit/23ea2ae0189ce15fab299fd9e662d14e40a1d1a9))
+- 迁移到mise管理，更新GitHub Actions ([cd0e4e5](https://github.com/emptylight370/sy-format-helper/commit/cd0e4e5f39c4347304b6bc2553c9801b23c99f1b))
+- 添加Prettier格式化TOML文件的配置 ([cdfef4d](https://github.com/emptylight370/sy-format-helper/commit/cdfef4d0d09f12a0ef2c0d81922e6bc8de807cd2))
+- 在提交前格式化文件 ([70bc8f8](https://github.com/emptylight370/sy-format-helper/commit/70bc8f8d1343c9cb813330c55186ccc6089cdb6d))
+- **action:** 更新GitHub Actions以适应变化 ([052c579](https://github.com/emptylight370/sy-format-helper/commit/052c5791644371d10b3ce91e21c64b95072a20d8))
+- **lefthook:** 并行执行检查缩短处理时间 ([042cb5c](https://github.com/emptylight370/sy-format-helper/commit/042cb5cc42a7788a794cca6bd9d725cff62a9d78))
+- **lefthook:** 修改触发条件 ([8940d54](https://github.com/emptylight370/sy-format-helper/commit/8940d547063eb651ab50ba2b59542441362579ca))
+- **lefthook:** 重置格式化文件的逻辑 ([8744685](https://github.com/emptylight370/sy-format-helper/commit/87446850ef43ce5521fd93b57831e2f5f0e0fb58))
+- Update workflow ([ee1cc7d](https://github.com/emptylight370/sy-format-helper/commit/ee1cc7d372441d75234075b75b767857d0dbe2cd))
+
 ## [0.4.4](https://github.com/emptylight370/sy-format-helper/compare/0.4.3...0.4.4) (2025-09-08)
 
 ### ⚡ Performance | 性能优化
