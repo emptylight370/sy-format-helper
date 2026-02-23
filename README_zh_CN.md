@@ -80,3 +80,5 @@
 | 无                                                                        | [Frostime](https://ld246.com/member/Frostime) | [插件开发 Quick Start](https://ld246.com/article/1723732790981)                              | 无      |
 | [思源API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | 思源开发者们                                  | 思源API                                                                                      | AGPL3.0 |
 | [转移引用](https://github.com/frostime/sy-transfer-refs)                  | [Frostime](https://github.com/frostime)       | [向思源发送API请求的方式](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT     |
+
+支持开发：[链接](https://blog.emptylight.cn/sponsor)

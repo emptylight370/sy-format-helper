@@ -2,7 +2,7 @@
   "name": "sy-format-helper",
   "author": "Emptylight",
   "url": "https://github.com/emptylight370/sy-format-helper",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "minAppVersion": "2.0.25",
   "disabledInPublish": true,
   "backends": [
@@ -36,7 +36,7 @@
     "patreon": "",
     "github": "",
     "custom": [
-      "https://afdian.com/a/tingyuting"
+      "https://blog.emptylight.cn/sponsor"
     ]
   },
   "keywords": [

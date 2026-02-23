@@ -80,3 +80,5 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 | None                                                                         | [Frostime](https://ld246.com/member/Frostime) | [PLugin Development Quick Start](https://ld246.com/article/1723732790981)                          | None    |
 | [SiYuan API](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md) | SiYuan Developers                             | SiYuan API                                                                                         | AGPL3.0 |
 | [Transfer refs](https://github.com/frostime/sy-transfer-refs)                | [Frostime](https://github.com/frostime)       | [The way to contact SiYuan API](https://github.com/frostime/sy-transfer-refs/blob/main/src/api.ts) | MIT     |
+
+Support development: [Link](https://emptylight.github.io/sponsor)
