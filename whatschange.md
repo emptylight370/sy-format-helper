@@ -1,5 +1,9 @@
 ## [0.4.6](https://github.com/emptylight370/sy-format-helper/compare/0.4.5...0.4.6) (2026-02-23)
 
+### ✨ Features | 功能
+
+- 更新支付链接 ([ba13a52](https://github.com/emptylight370/sy-format-helper/commit/ba13a5266bfe59e2a427c4f8bcfec3dff527d41e))
+
 ## [0.4.5](https://github.com/emptylight370/sy-format-helper/compare/0.4.4...0.4.5) (2026-02-17)
 
 ### ✨ Features | 功能
