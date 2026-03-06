@@ -1,3 +1,17 @@
+## [0.4.7](https://github.com/emptylight370/sy-format-helper/compare/0.4.6...0.4.7) (2026-03-06)
+
+### 🐛 Bug Fixes | 问题修复
+
+- 数字间连续多个空格移除后剩余两个空格 ([c050e76](https://github.com/emptylight370/sy-format-helper/commit/c050e76c3ae27f5e88477f93efbc478420f95cc3))
+
+### 📄 Documentation | 文档
+
+- 补全变更文档 ([8730b2a](https://github.com/emptylight370/sy-format-helper/commit/8730b2a8574215355c5251553f12afdef9732487))
+
+### ⚡ Performance | 性能优化
+
+- 变量从let改为const ([dd95983](https://github.com/emptylight370/sy-format-helper/commit/dd9598340b7c6a100677efcf49b81483560502fe))
+
 ## [0.4.6](https://github.com/emptylight370/sy-format-helper/compare/0.4.5...0.4.6) (2026-02-23)
 
 ### ✨ Features | 功能

@@ -1,6 +1,6 @@
 {
   "name": "sy-format-helper",
-  "version": "0.4.3",
+  "version": "0.4.7",
   "description": "SiYuan format helper",
   "main": ".src/index.js",
   "packageManager": "pnpm@10.30.3",
