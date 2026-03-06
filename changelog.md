@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.7
+
+- 修复数字间连续多个空格移除后剩余两个空格问题
+- Fixed an issue where removing consecutive spaces between numbers left two spaces remaining
+
 ## v0.4.4
 
 - 在发布服务中禁用

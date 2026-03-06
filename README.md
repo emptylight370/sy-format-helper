@@ -64,12 +64,12 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 > Complete [changelog](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
 > Complete [commit history](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
+- v0.4.7
+  - Fixed an issue where removing consecutive spaces between numbers left two spaces remaining
 - v0.4.4
   - Disable in Publish mode
 - v0.4.2
   - Added functionality to add spaces after legal article entries
-- v0.4.1
-  - Add full-width characters to half-width and half-width characters to full-width functions
 
 # Thanks
 

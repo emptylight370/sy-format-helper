@@ -235,7 +235,10 @@ export default class FormatHelper extends Plugin {
                     // console.log(innerText);
                     // 去除文本中的多余空格，但保留换行符
                     if (innerText && !skip) {
-                        innerText = innerText.replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, '').trim();
+                        innerText = innerText
+                            .replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, '')
+                            .replace(/[ ]{2,}/g, ' ')
+                            .trim();
                         // console.log(innerText);
                         node.nodeValue = innerText;
                     }
