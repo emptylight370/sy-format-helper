@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.8
+
+- 实现中文英文符号互转功能
+- Implement Chinese and English symbol conversion function
+
 ## v0.4.7
 
 - 修复数字间连续多个空格移除后剩余两个空格问题

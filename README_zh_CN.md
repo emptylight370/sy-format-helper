@@ -64,12 +64,12 @@
 > 完整[更新日志](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
 > 完整[提交记录](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
+- v0.4.8
+  - 实现中文英文符号互转功能
 - v0.4.7
   - 修复数字间连续多个空格移除后剩余两个空格问题
 - v0.4.4
   - 在发布服务中禁用
-- v0.4.2
-  - 添加了法律法规条目后增加空格功能
 
 # 感谢
 

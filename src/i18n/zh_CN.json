@@ -18,5 +18,7 @@
   "textBlockFullToHalf": "全角字符转半角",
   "textBlockHalfToFull": "半角字符转全角",
   "lawAddSpace": "法律法规（章、节、条）添加空格",
-  "lawIncludeFullSpace": "格式助手：包含全角空格转半角空格（全角可能不显示）"
+  "lawIncludeFullSpace": "格式助手：包含全角空格转半角空格（全角可能不显示）",
+  "CNtoEN": "中文符号转英文符号",
+  "ENtoCN": "英文符号转中文符号"
 }

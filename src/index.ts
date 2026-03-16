@@ -152,6 +152,28 @@ export default class FormatHelper extends Plugin {
                     showMessage(this.i18n.needRefresh);
                 },
             });
+            submenu.push({
+                icon: 'iconEdit',
+                label: this.i18n.CNtoEN,
+                click: async () => {
+                    blockElements.forEach(async (blockElement) => {
+                        const blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, 'CNtoEN');
+                    });
+                    showMessage(this.i18n.needRefresh);
+                },
+            });
+            submenu.push({
+                icon: 'iconEdit',
+                label: this.i18n.ENtoCN,
+                click: async () => {
+                    blockElements.forEach(async (blockElement) => {
+                        const blockId = blockElement.getAttribute('data-node-id');
+                        await this.handleTextBlock(blockId, protyle, 'ENtoCN');
+                    });
+                    showMessage(this.i18n.needRefresh);
+                },
+            });
         }
         if (submenu.length != 0) {
             menu.addItem({
@@ -199,6 +221,10 @@ export default class FormatHelper extends Plugin {
         else if (type == 'halfToFull') updated = this.toFullChar(dom);
         // 法律法规（章、节、条）后添加空格
         else if (type == 'law') updated = this.lawAddSpace(dom);
+        // 中文符号转英文符号
+        else if (type == 'CNtoEN') updated = this.CNtoEN(dom);
+        // 英文符号转中文符号
+        else if (type == 'ENtoCN') updated = this.ENtoCN(dom);
         if (updated == null || updated == undefined || (updated.dom === origin.dom && updated.id === origin.id)) {
             showMessage(this.i18n.nothingChange);
             return;
@@ -477,6 +503,100 @@ export default class FormatHelper extends Plugin {
                 }
             }
         });
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 英文符号转中文符号
+    private ENtoCN(dom: { dom: string; id: string }) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(dom.dom, 'text/html');
+        const blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn('No block elements found.');
+            showMessage(this.i18n.noTextFound, undefined, 'error');
+            return dom;
+        }
+
+        blockElements.forEach((blockElement) => {
+            const editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while ((node = walker.nextNode())) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将英文符号转换为中文符号
+                    if (innerText && !skip) {
+                        innerText = innerText
+                            .replace(/,/g, '，')
+                            .replace(/\./g, '。')
+                            .replace(/\(/g, '（')
+                            .replace(/\)/g, '）')
+                            .replace(/\[/g, '【')
+                            .replace(/\]/g, '】')
+                            .replace(/:/g, '：')
+                            .replace(/;/g, '；')
+                            .replace(/!/g, '！')
+                            .replace(/\?/g, '？');
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
+        dom.dom = doc.body.innerHTML;
+        return dom;
+    }
+
+    // NOTE - 中文符号转英文符号
+    private CNtoEN(dom: { dom: string; id: string }) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(dom.dom, 'text/html');
+        const blockElements = doc.querySelectorAll('[data-node-id]');
+
+        if (blockElements.length === 0) {
+            console.warn('No block elements found.');
+            showMessage(this.i18n.noTextFound, undefined, 'error');
+            return dom;
+        }
+
+        blockElements.forEach((blockElement) => {
+            const editable = blockElement.querySelector('div[contenteditable=true]');
+            if (editable) {
+                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+                let node;
+                while ((node = walker.nextNode())) {
+                    let innerText = node.nodeValue;
+                    let skip = false;
+                    // 跳过tag
+                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                        skip = true;
+                    }
+                    // 将中文符号转换为英文符号
+                    if (innerText && !skip) {
+                        innerText = innerText
+                            .replace(/，/g, ',')
+                            .replace(/。/g, '.')
+                            .replace(/（/g, '(')
+                            .replace(/）/g, ')')
+                            .replace(/【/g, '[')
+                            .replace(/】/g, ']')
+                            .replace(/：/g, ':')
+                            .replace(/；/g, ';')
+                            .replace(/！/g, '!')
+                            .replace(/？/g, '?');
+                        node.nodeValue = innerText;
+                    }
+                }
+            }
+        });
+
         dom.dom = doc.body.innerHTML;
         return dom;
     }
