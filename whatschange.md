@@ -1,3 +1,9 @@
+## [0.4.8](https://github.com/emptylight370/sy-format-helper/compare/0.4.7...0.4.8) (2026-03-16)
+
+### ✨ Features | 功能
+
+- 实现中文英文符号互转功能 ([c9a2782](https://github.com/emptylight370/sy-format-helper/commit/c9a27829dee0fab17142e0eda05d4edc260c759f))
+
 ## [0.4.7](https://github.com/emptylight370/sy-format-helper/compare/0.4.6...0.4.7) (2026-03-06)
 
 ### 🐛 Bug Fixes | 问题修复
