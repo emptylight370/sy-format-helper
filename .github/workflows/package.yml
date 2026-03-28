@@ -22,13 +22,13 @@ jobs:
           fetch-depth: 50
           fetch-tags: true
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
 
       - name: Install deps
         run: pnpm i
 
       - name: Get current version
-        uses: flex-development/jq-action@main
+        uses: emptylight370/jq-action@v1
         id: version
         with:
           data: plugin.json
