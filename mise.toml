@@ -4,9 +4,9 @@ node = "24"
 "npm:conventional-changelog" = "latest"
 pnpm = "latest"
 
-[prepare.pnpm]
+[deps.pnpm]
 
-[prepare.lefthook]
+[deps.lefthook]
 description = "Install lefthook hooks"
 run = "lefthook install"
 sources = ["lefthook.yml"]
