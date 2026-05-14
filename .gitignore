@@ -267,4 +267,3 @@ scripts/*
 mise.local.toml
 lefthook-local.yml
 .lefthook-local/**/*
-.mise/deps-state.toml
