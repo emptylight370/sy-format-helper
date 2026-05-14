@@ -1,10 +1,10 @@
-## [0.4.8] (2026-03-16)
+## [0.4.8](https://github.com/emptylight370/sy-format-helper/compare/0.4.7...0.4.8) (2026-03-16)
 
 ### ✨ Features | 功能
 
 - 实现中文英文符号互转功能 ([c9a2782](https://github.com/emptylight370/sy-format-helper/commit/c9a27829dee0fab17142e0eda05d4edc260c759f))
 
-## [0.4.7] (2026-03-06)
+## [0.4.7](https://github.com/emptylight370/sy-format-helper/compare/0.4.6...0.4.7) (2026-03-06)
 
 ### 🐛 Bug Fixes | 问题修复
 
@@ -18,13 +18,13 @@
 
 - 变量从let改为const ([dd95983](https://github.com/emptylight370/sy-format-helper/commit/dd9598340b7c6a100677efcf49b81483560502fe))
 
-## [0.4.6] (2026-02-23)
+## [0.4.6](https://github.com/emptylight370/sy-format-helper/compare/0.4.5...0.4.6) (2026-02-23)
 
 ### ✨ Features | 功能
 
 - 更新支付链接 ([ba13a52](https://github.com/emptylight370/sy-format-helper/commit/ba13a5266bfe59e2a427c4f8bcfec3dff527d41e))
 
-## [0.4.5] (2026-02-17)
+## [0.4.5](https://github.com/emptylight370/sy-format-helper/compare/0.4.4...0.4.5) (2026-02-17)
 
 ### ✨ Features | 功能
 
@@ -52,7 +52,7 @@
 - **(fix)** 工作流使用了不存在的文件 ([89fb848](https://github.com/emptylight370/sy-format-helper/commit/89fb8482e97f1a6a6976077efba88628b1404e4d))
 - **(fix)** 工作流使用了不存在的文件 ([7e8c049](https://github.com/emptylight370/sy-format-helper/commit/7e8c04952641ae67f0ee7910845756bff47124a7))
 
-## [0.4.4] (2025-09-08)
+## [0.4.4](https://github.com/emptylight370/sy-format-helper/compare/0.4.3...0.4.4) (2025-09-08)
 
 ### ⚡ Performance | 性能优化
 
@@ -67,7 +67,7 @@
 - 修改node版本至最新 ([fdcffcc](https://github.com/emptylight370/sy-format-helper/commit/fdcffcc3d7a8517e108cf5fba4333531fc9d2b4e))
 - 切换jq到现成动作 ([a410c61](https://github.com/emptylight370/sy-format-helper/commit/a410c61afc445f37b1b7b0bce191fdba05734768))
 
-## [0.4.3] (2025-08-18)
+## [0.4.3](https://github.com/emptylight370/sy-format-helper/compare/0.4.2...0.4.3) (2025-08-18)
 
 ### ✨ Features | 功能
 
@@ -81,19 +81,19 @@
 
 - 更新工作流以修复问题 ([977723e](https://github.com/emptylight370/sy-format-helper/commit/977723e4e0c6437f13e6ca726062145f11ae0e49))
 
-## [0.4.2] (2025-04-16)
+## [0.4.2](https://github.com/emptylight370/sy-format-helper/compare/0.4.1...0.4.2) (2025-04-16)
 
 ### ✨ Features | 功能
 
 - 添加了法律法规条目后增加空格功能 ([9fb07be](https://github.com/emptylight370/sy-format-helper/commit/9fb07be1badbed24864964b640663138c2a467e1))
 
-## [0.4.1] (2025-03-24)
+## [0.4.1](https://github.com/emptylight370/sy-format-helper/compare/0.4.0...0.4.1) (2025-03-24)
 
 ### ✨ Features | 功能
 
 - 添加全半角字符互转功能 ([63b2fb8](https://github.com/emptylight370/sy-format-helper/commit/63b2fb861d73db079b03f0c43a16e7fab25fd7b0))
 
-## [0.4.0] (2025-03-24)
+## [0.4.0](https://github.com/emptylight370/sy-format-helper/compare/0.3.2...0.4.0) (2025-03-24)
 
 ### ✨ Features | 功能
 
@@ -102,13 +102,13 @@
 - 现在能够一次处理多个块 ([300cc7e](https://github.com/emptylight370/sy-format-helper/commit/300cc7e90ea5ef62b58050f7ab911dc18d244c3e))
 - 代码块添加移除缩进按钮 ([0b75f24](https://github.com/emptylight370/sy-format-helper/commit/0b75f24b11565f538e20c8fd3610af13328e68e4))
 
-## [0.3.2] (2025-02-09)
+## [0.3.2](https://github.com/emptylight370/sy-format-helper/compare/0.3.1...0.3.2) (2025-02-09)
 
 ### 📄 Documentation | 文档
 
 - Update Readme ([ad7e0a7](https://github.com/emptylight370/sy-format-helper/commit/ad7e0a7b5825d7fe3de76501a6c17ba658431add))
 
-## [0.3.1] (2025-02-06)
+## [0.3.1](https://github.com/emptylight370/sy-format-helper/compare/0.3.0...0.3.1) (2025-02-06)
 
 ### ✨ Features | 功能
 
@@ -124,7 +124,7 @@
 
 - **(deps)** 更新依赖库：siyuan ([480f35c](https://github.com/emptylight370/sy-format-helper/commit/480f35c8835c5622c5d10c908b2c482fae7f16d6))
 
-## [0.3.0] (2024-12-24)
+## [0.3.0](https://github.com/emptylight370/sy-format-helper/compare/0.2.5...0.3.0) (2024-12-24)
 
 ### ✨ Features | 功能
 
@@ -138,25 +138,25 @@
 
 - 将下载量统计改为最新版本的下载量 ([4722456](https://github.com/emptylight370/sy-format-helper/commit/4722456b93a23633357a2672ce54af7fb2797a7d))
 
-## [0.2.5] (2024-12-23)
+## [0.2.5](https://github.com/emptylight370/sy-format-helper/compare/0.2.4...0.2.5) (2024-12-23)
 
 ### 🐛 Bug Fixes | 问题修复
 
 - **(core)** 意外处理tag ([88e7c50](https://github.com/emptylight370/sy-format-helper/commit/88e7c5010a7aab06b0ac11feb3e1e11b683bc79b))
 
-## [0.2.4] (2024-12-23)
+## [0.2.4](https://github.com/emptylight370/sy-format-helper/compare/0.2.3...0.2.4) (2024-12-23)
 
 ### 📄 Documentation | 文档
 
 - Update README ([f134a43](https://github.com/emptylight370/sy-format-helper/commit/f134a43cc306f81419ade56f9f5694ed62cfc27a))
 
-## [0.2.3] (2024-12-22)
+## [0.2.3](https://github.com/emptylight370/sy-format-helper/compare/0.2.2...0.2.3) (2024-12-22)
 
 ### 📄 Documentation | 文档
 
 - 更新说明文档 ([47f1461](https://github.com/emptylight370/sy-format-helper/commit/47f14612c6d198e81f10eb66dadde807b4489149))
 
-## [0.2.2] (2024-12-22)
+## [0.2.2](https://github.com/emptylight370/sy-format-helper/compare/0.2.1...0.2.2) (2024-12-22)
 
 ### ✨ Features | 功能
 
@@ -170,7 +170,7 @@
 
 - 文档更新 ([c11b597](https://github.com/emptylight370/sy-format-helper/commit/c11b59723fe51cb83a1161b682e6a329448c472e))
 
-## [0.2.1] (2024-12-21)
+## [0.2.1](https://github.com/emptylight370/sy-format-helper/compare/0.2.0...0.2.1) (2024-12-21)
 
 ### ✨ Features | 功能
 
@@ -178,7 +178,7 @@
 - **(core)** 添加不同的选中块类型判断 ([e1a6597](https://github.com/emptylight370/sy-format-helper/commit/e1a6597bd704f938c1f09c00970dd1ef0086be7e))
 - **(core)** 实现在数字和英文前后添加空格功能 ([3fdf36a](https://github.com/emptylight370/sy-format-helper/commit/3fdf36a4732641a8aac8aaeb1cef3146888c31c0))
 
-## [0.2.0] (2024-12-20)
+## [0.2.0](https://github.com/emptylight370/sy-format-helper/compare/0.1.1...0.2.0) (2024-12-20)
 
 ### ✨ Features | 功能
 
@@ -188,7 +188,7 @@
 
 - fix ([cb7512c](https://github.com/emptylight370/sy-format-helper/commit/cb7512c2e89a9a139e8f8b662c1871973fff7d71))
 
-## [0.1.1] (2024-12-17)
+## [0.1.1](https://github.com/emptylight370/sy-format-helper/compare/0.1.0...0.1.1) (2024-12-17)
 
 ### ⚠ BREAKING CHANGES
 
@@ -206,7 +206,7 @@
 
 - 填充说明文档 ([2d2f067](https://github.com/emptylight370/sy-format-helper/commit/2d2f067bc997ba06e7e96d8c5893fab28b8e5dd2))
 
-## [0.1.0] (2024-12-17)
+## 0.1.0 (2024-12-17)
 
 ### ✨ Features | 功能
 
