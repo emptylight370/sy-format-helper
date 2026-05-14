@@ -206,7 +206,7 @@
 
 - 填充说明文档 ([2d2f067](https://github.com/emptylight370/sy-format-helper/commit/2d2f067bc997ba06e7e96d8c5893fab28b8e5dd2))
 
-## 0.1.0 (2024-12-17)
+## [0.1.0](https://github.com/emptylight370/sy-format-helper/compare/3a188440f4326a0289862a85db123cc908c1c43d...0.1.0) (2024-12-17)
 
 ### ✨ Features | 功能
 
