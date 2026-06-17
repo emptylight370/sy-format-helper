@@ -3,16 +3,10 @@
   "author": "Emptylight",
   "url": "https://github.com/emptylight370/sy-format-helper",
   "version": "0.4.8",
-  "minAppVersion": "2.0.25",
+  "minAppVersion": "3.7.0",
   "disabledInPublish": true,
   "backends": [
-    "windows",
-    "linux",
-    "darwin",
-    "ios",
-    "android",
-    "harmony",
-    "docker"
+    "all"
   ],
   "frontends": [
     "desktop",
@@ -21,15 +15,15 @@
   ],
   "displayName": {
     "default": "Format Helper",
-    "zh_CN": "格式助手"
+    "zh-CN": "格式助手"
   },
   "description": {
     "default": "Format the text block",
-    "zh_CN": "格式化文本块"
+    "zh-CN": "格式化文本块"
   },
   "readme": {
     "default": "README.md",
-    "zh_CN": "README_zh_CN.md"
+    "zh-CN": "README.zh-CN.md"
   },
   "funding": {
     "openCollective": "",

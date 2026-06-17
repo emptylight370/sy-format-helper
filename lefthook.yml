@@ -3,7 +3,7 @@ pre-commit:
   jobs:
     - name: Format code with prettier
       skip:
-        - run: npx prettier -c src README.md README_zh_CN.md
+        - run: npx prettier -c src README.md README.zh-CN.md
       run: pnpm run format
       stage_fixed: true
 
@@ -12,4 +12,4 @@ pre-commit:
         # 仅在修改了version的时候执行
         - run: $(! git diff --cached -U0 'plugin.json' | grep -q -F 'version')
       run: mise run changelog
-      fail_text: '请检查依赖安装状态，运行mise install安装依赖'
+      fail_text: "请检查依赖安装状态，运行mise install安装依赖"
