@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate release log
         run: |
-          conventional-changelog -o release.md -n changelog.json -k plugin.json -c plugin.json
+          git cliff -u -o release.md -t ${{ steps.version.outputs.result }}
           npx prettier -w release.md
 
       - name: Release
