@@ -1,3 +1,18 @@
+## [0.5.0](https://github.com/emptylight370/sy-format-helper/compare/0.4.8...0.5.0) (2026-06-28)
+
+### 🔨 Refactor | 重构
+
+- 适配RFC 5646规范[skip ci] ([45d075c](https://github.com/emptylight370/sy-format-helper/commit/45d075c6cb201895ff982264ffd02769e65e3c8f))
+
+### 🛠️ Build system | 构建系统
+
+- 更新工作流文件 ([b71ead1](https://github.com/emptylight370/sy-format-helper/commit/b71ead155e511a56c4b07a43a32692b7fa5b823f))
+- 迁移到conventional-changelog ([167b681](https://github.com/emptylight370/sy-format-helper/commit/167b681eea38ba1a1f7c7ff74d38ee4fd4b373c1))
+- 切换到git-cliff ([719f728](https://github.com/emptylight370/sy-format-helper/commit/719f728a58efa3a2e9f97ef9e898851198e908dd))
+- 还原git-cliff配置 ([d965ce6](https://github.com/emptylight370/sy-format-helper/commit/d965ce67a605dcb69c9a702d365d978ce0fb5ea1))
+- 修正提取版本号脚本 ([753969d](https://github.com/emptylight370/sy-format-helper/commit/753969d53393dc9dd6435f03067fcd566c92fbff))
+- **(changelog)** 生成首个版本的链接 ([02c240d](https://github.com/emptylight370/sy-format-helper/commit/02c240d6efcd1816a982845b89e5a7ca8c8d7c28))
+
 ## [0.4.8](https://github.com/emptylight370/sy-format-helper/compare/0.4.7...0.4.8) (2026-03-16)
 
 ### ✨ Features | 功能
