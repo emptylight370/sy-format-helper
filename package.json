@@ -3,7 +3,6 @@
   "version": "0.4.8",
   "description": "SiYuan format helper",
   "main": ".src/index.js",
-  "packageManager": "pnpm@11.20.0",
   "scripts": {
     "lint": "eslint . --fix --cache",
     "format": "prettier -w src README*.md",
@@ -14,6 +13,16 @@
   "keywords": [],
   "author": "Emptylight",
   "license": "MIT",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.0.0"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=11.0.0"
+    }
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.6",
     "@eslint/js": "^10.0.1",
