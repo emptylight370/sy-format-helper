@@ -17,12 +17,12 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 50
           fetch-tags: true
 
-      - uses: jdx/mise-action@v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
 
       - name: Install deps
         run: pnpm i
@@ -43,7 +43,7 @@ jobs:
           npx prettier -w release.md
 
       - name: Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: package.zip
           name: Release ${{ steps.version.outputs.result }}
