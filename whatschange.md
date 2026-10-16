@@ -1,4 +1,24 @@
+## [0.6.0](https://github.com/emptylight370/sy-format-helper/compare/0.5.0...0.6.0) (2026-10-16)
+
+### 🐛 Bug Fixes | 问题修复
+
+- prettier ([9b26361](https://github.com/emptylight370/sy-format-helper/commit/9b26361b7c6c1759268840c37ea989c00a21232a))
+
+### 🔨 Refactor | 重构
+
+- 适配3.8.8移除函数 ([eb37220](https://github.com/emptylight370/sy-format-helper/commit/eb37220f1dd3293ef6f88ed45c00e02e66a81f26))
+
+### 🛠️ Build system | 构建系统
+
+- Reset actions ([3096ce4](https://github.com/emptylight370/sy-format-helper/commit/3096ce423ca4afabf85c29a3c6d01d5035c9ce7c))
+- declare devEngine ([6fe8a9b](https://github.com/emptylight370/sy-format-helper/commit/6fe8a9b47b5964fe7c842a47d76093dd2488e460))
+
 ## [0.5.0](https://github.com/emptylight370/sy-format-helper/compare/0.4.8...0.5.0) (2026-06-28)
+
+### 🐛 Bug Fixes | 问题修复
+
+- 生成changelog ([e707de6](https://github.com/emptylight370/sy-format-helper/commit/e707de6f66d8f0c0db0f2a59f582a92da8d5a1f6))
+- **(ci)** 修复打包工作流错误 ([942a3f0](https://github.com/emptylight370/sy-format-helper/commit/942a3f0c5c4a3f89f6c5b3cb76051ddf7b156b5a))
 
 ### 🔨 Refactor | 重构
 
