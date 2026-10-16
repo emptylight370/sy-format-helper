@@ -64,12 +64,12 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 > Complete [changelog](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
 > Complete [commit history](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
+- v0.6.0
+  - Change call function, adapt to 3.8.8 removed function
 - v0.5.0
   - Adapt to SiYuan 3.7.0
 - v0.4.8
   - Implement Chinese and English symbol conversion function
-- v0.4.7
-  - Fixed an issue where removing consecutive spaces between numbers left two spaces remaining
 
 # Thanks
 

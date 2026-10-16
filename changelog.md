@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.0
+
+- 更换调用函数，适配3.8.8移除的函数
+- Change call function, adapt to 3.8.8 removed function
+
 ## v0.4.8
 
 - 实现中文英文符号互转功能

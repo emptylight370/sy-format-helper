@@ -8,7 +8,6 @@ import {
     getBackend,
     Setting,
     fetchPost,
-    Protyle,
     IOperation,
     Constants,
     Custom,
@@ -19,8 +18,8 @@ import { IProtyle } from 'siyuan/types';
 import * as api from './api';
 
 export default class FormatHelper extends Plugin {
-    private custom: () => Custom;
-    private isMobile: boolean = getBackend() == 'android' || getBackend() == 'harmony' || getBackend() == 'ios';
+    // private custom: () => Custom;
+    // private isMobile: boolean = getBackend() == 'android' || getBackend() == 'harmony' || getBackend() == 'ios';
     private appId = this.app.appId;
 
     // 加载完成
@@ -52,7 +51,7 @@ export default class FormatHelper extends Plugin {
         const menu: Menu = detail.menu;
         const submenu = [];
         const blockElements: HTMLElement[] = detail.blockElements;
-        const protyle = (detail.protyle as IProtyle).getInstance();
+        const protyle = detail.protyle as IProtyle;
         const children = detail.blockElements[0].childNodes;
         // 判断选中块类型，目前只能快速分辨代码块
         if (Array.from(children).some((child) => (child as HTMLElement).classList.contains('hljs'))) {
@@ -83,7 +82,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'remove');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -94,7 +93,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'space');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -105,7 +104,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'upper');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -116,7 +115,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'lower');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -127,7 +126,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'fullToHalf');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -138,7 +137,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'halfToFull');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -149,7 +148,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'law');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -160,7 +159,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'CNtoEN');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
             submenu.push({
@@ -171,7 +170,7 @@ export default class FormatHelper extends Plugin {
                         const blockId = blockElement.getAttribute('data-node-id');
                         await this.handleTextBlock(blockId, protyle, 'ENtoCN');
                     });
-                    showMessage(this.i18n.needRefresh);
+                    // showMessage(this.i18n.needRefresh);
                 },
             });
         }
@@ -188,7 +187,7 @@ export default class FormatHelper extends Plugin {
 
     // SECTION 处理文本操作====================>
     // NOTE - 处理内容块菜单点击事件
-    private async handleTextBlock(blockId: string, protyle: Protyle, type: string) {
+    private async handleTextBlock(blockId: string, protyle: IProtyle, type: string) {
         // 获取块
         const dom: { dom: string; id: string } = await api.getDom(blockId);
         console.log(dom);
@@ -230,8 +229,22 @@ export default class FormatHelper extends Plugin {
             return;
         } else {
             if (type == 'law') showMessage(this.i18n.lawIncludeFullSpace);
-            protyle.updateTransaction(blockId, updated.dom, origin.dom);
+            this.commitUpdatedBlock(protyle, blockId, updated.dom, origin.dom);
         }
+    }
+
+    // NOTE - 将修改后的块 HTML 替换进编辑器真实 DOM，并提交事务
+    private commitUpdatedBlock(protyle: IProtyle, blockId: string, newHTML: string, oldHTML: string) {
+        const template = document.createElement('template');
+        template.innerHTML = newHTML.trim();
+        const newElement = template.content.firstElementChild as HTMLElement;
+        const oldElement = protyle.wysiwyg.element.querySelector(`[data-node-id="${blockId}"]`);
+        if (!newElement || !oldElement) {
+            showMessage(this.i18n.noParaFound, undefined, 'error');
+            return;
+        }
+        oldElement.replaceWith(newElement);
+        protyle.updateTransactionElement(newElement, oldHTML);
     }
 
     // NOTE - 移除空格
