@@ -1,30 +1,18 @@
-import {
-    Plugin,
-    showMessage,
-    confirm,
-    Dialog,
-    Menu,
-    getFrontend,
-    getBackend,
-    Setting,
-    fetchPost,
-    IOperation,
-    Constants,
-    Custom,
-    getAllEditor,
-} from 'siyuan';
+import { Plugin, showMessage, Menu } from 'siyuan';
 import './index.scss';
 import { IProtyle } from 'siyuan/types';
 import * as api from './api';
 
 export default class FormatHelper extends Plugin {
-    // private custom: () => Custom;
-    // private isMobile: boolean = getBackend() == 'android' || getBackend() == 'harmony' || getBackend() == 'ios';
     private appId = this.app.appId;
+    // 存储固定引用：bind 每次会生成新函数，off 必须传入与 on 相同的引用才能移除监听器
+    private readonly onBlockIcon = this.addTextBlockItem.bind(this);
+    // 防止重复点击：上一次批量处理未结束时忽略新的触发
+    private processing = false;
 
     // 加载完成
     onload() {
-        this.eventBus.on('click-blockicon', this.addTextBlockItem.bind(this));
+        this.eventBus.on('click-blockicon', this.onBlockIcon);
         console.log(this.i18n.helloPlugin);
     }
 
@@ -35,13 +23,13 @@ export default class FormatHelper extends Plugin {
 
     // 插件取消加载
     onunload() {
-        this.eventBus.off('click-blockicon', this.addTextBlockItem.bind(this));
+        this.eventBus.off('click-blockicon', this.onBlockIcon);
         console.log(this.i18n.byePlugin);
     }
 
     // 插件卸载或停用
     uninstall() {
-        this.eventBus.off('click-blockicon', this.addTextBlockItem.bind(this));
+        this.eventBus.off('click-blockicon', this.onBlockIcon);
         console.log(this.i18n.uninstallPlugin);
     }
 
@@ -74,104 +62,24 @@ export default class FormatHelper extends Plugin {
                 },
             });
         } else {
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockRmWhiteSpace,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'remove');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockAddSpace,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'space');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockUpperCase,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'upper');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockLowerCase,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'lower');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockFullToHalf,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'fullToHalf');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.textBlockHalfToFull,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'halfToFull');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.lawAddSpace,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'law');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.CNtoEN,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'CNtoEN');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
-            });
-            submenu.push({
-                icon: 'iconEdit',
-                label: this.i18n.ENtoCN,
-                click: async () => {
-                    blockElements.forEach(async (blockElement) => {
-                        const blockId = blockElement.getAttribute('data-node-id');
-                        await this.handleTextBlock(blockId, protyle, 'ENtoCN');
-                    });
-                    // showMessage(this.i18n.needRefresh);
-                },
+            // 文本块操作菜单：数据驱动，统一入口为 processTextBlocks
+            const textItems: Array<{ label: string; type: string }> = [
+                { label: this.i18n.textBlockRmWhiteSpace, type: 'remove' },
+                { label: this.i18n.textBlockAddSpace, type: 'space' },
+                { label: this.i18n.textBlockUpperCase, type: 'upper' },
+                { label: this.i18n.textBlockLowerCase, type: 'lower' },
+                { label: this.i18n.textBlockFullToHalf, type: 'fullToHalf' },
+                { label: this.i18n.textBlockHalfToFull, type: 'halfToFull' },
+                { label: this.i18n.lawAddSpace, type: 'law' },
+                { label: this.i18n.CNtoEN, type: 'CNtoEN' },
+                { label: this.i18n.ENtoCN, type: 'ENtoCN' },
+            ];
+            textItems.forEach((item) => {
+                submenu.push({
+                    icon: 'iconEdit',
+                    label: item.label,
+                    click: () => this.processTextBlocks(blockElements, protyle, item.type),
+                });
             });
         }
         if (submenu.length != 0) {
@@ -186,51 +94,84 @@ export default class FormatHelper extends Plugin {
     // !SECTION 添加点击菜单====================<
 
     // SECTION 处理文本操作====================>
-    // NOTE - 处理内容块菜单点击事件
-    private async handleTextBlock(blockId: string, protyle: IProtyle, type: string) {
-        // 获取块
-        const dom: { dom: string; id: string } = await api.getDom(blockId);
-        console.log(dom);
-        const origin = { dom: '', id: '' };
-        origin.dom = dom.dom;
-        origin.id = dom.id;
-        // console.log(dom);
-        // 如果未获取到块
-        if (dom == null || dom == undefined) {
-            showMessage(this.i18n.noParaFound, undefined, 'error');
+    // NOTE - 批量处理选中文本块：重复点击防护、逐块容错、聚合提示
+    private async processTextBlocks(blockElements: HTMLElement[], protyle: IProtyle, type: string) {
+        if (this.processing) {
             return;
         }
+        this.processing = true;
+        try {
+            let changedCount = 0;
+            let failedCount = 0;
+            for (const blockElement of blockElements) {
+                const blockId = blockElement.getAttribute('data-node-id');
+                if (!blockId) {
+                    continue;
+                }
+                try {
+                    if (await this.handleTextBlock(blockId, protyle, type)) {
+                        changedCount++;
+                    }
+                } catch (error) {
+                    failedCount++;
+                    console.error(`format block ${blockId} failed:`, error);
+                }
+            }
+            if (failedCount > 0) {
+                showMessage(this.i18n.noParaFound, undefined, 'error');
+            } else if (changedCount === 0) {
+                showMessage(this.i18n.nothingChange);
+            } else if (type === 'law') {
+                showMessage(this.i18n.lawIncludeFullSpace);
+            }
+        } finally {
+            this.processing = false;
+        }
+    }
+
+    // NOTE - 处理单个文本块，返回是否发生修改并提交
+    private async handleTextBlock(blockId: string, protyle: IProtyle, type: string): Promise<boolean> {
+        // 获取块（接口异常时 request 返回 null，必须先判空再取属性）
+        const dom: { dom: string; id: string } | null = await api.getDom(blockId);
+        if (!dom || !dom.dom) {
+            throw new Error(`getBlockDOM failed: ${blockId}`);
+        }
+        const origin = { dom: dom.dom, id: dom.id };
         // 如果获取到的块id不对(看似不可能发生)
-        if (blockId != dom.id) {
+        if (blockId !== origin.id) {
             showMessage(this.i18n.idWrong, undefined, 'error');
-            return;
+            return false;
         }
-        let updated;
-        // 智能移除空格
-        if (type == 'remove') updated = this.removeWriteSpace(dom);
-        // 为数字和英文添加空格
-        else if (type == 'space') updated = this.addSpace(dom);
-        // 全字母大写
-        else if (type == 'upper') updated = this.upperCase(dom);
-        // 全字母小写
-        else if (type == 'lower') updated = this.lowerCase(dom);
-        // 全角字符转半角字符
-        else if (type == 'fullToHalf') updated = this.toHalfChar(dom);
-        // 半角字符转全角字符
-        else if (type == 'halfToFull') updated = this.toFullChar(dom);
-        // 法律法规（章、节、条）后添加空格
-        else if (type == 'law') updated = this.lawAddSpace(dom);
-        // 中文符号转英文符号
-        else if (type == 'CNtoEN') updated = this.CNtoEN(dom);
-        // 英文符号转中文符号
-        else if (type == 'ENtoCN') updated = this.ENtoCN(dom);
-        if (updated == null || updated == undefined || (updated.dom === origin.dom && updated.id === origin.id)) {
-            showMessage(this.i18n.nothingChange);
-            return;
-        } else {
-            if (type == 'law') showMessage(this.i18n.lawIncludeFullSpace);
-            this.commitUpdatedBlock(protyle, blockId, updated.dom, origin.dom);
+        const transforms: Record<string, (dom: { dom: string; id: string }) => { dom: string; id: string }> = {
+            // 智能移除空格
+            remove: (d) => this.removeWriteSpace(d),
+            // 为数字和英文添加空格
+            space: (d) => this.addSpace(d),
+            // 全字母大写
+            upper: (d) => this.upperCase(d),
+            // 全字母小写
+            lower: (d) => this.lowerCase(d),
+            // 全角字符转半角字符
+            fullToHalf: (d) => this.toHalfChar(d),
+            // 半角字符转全角字符
+            halfToFull: (d) => this.toFullChar(d),
+            // 法律法规（章、节、条）后添加空格
+            law: (d) => this.lawAddSpace(d),
+            // 中文符号转英文符号
+            CNtoEN: (d) => this.CNtoEN(d),
+            // 英文符号转中文符号
+            ENtoCN: (d) => this.ENtoCN(d),
+        };
+        const transform = transforms[type];
+        if (!transform) {
+            return false;
         }
+        const updated = transform(dom);
+        if (!updated || updated.dom === origin.dom) {
+            return false;
+        }
+        this.commitUpdatedBlock(protyle, blockId, updated.dom, origin.dom);
+        return true;
     }
 
     // NOTE - 将修改后的块 HTML 替换进编辑器真实 DOM，并提交事务
@@ -246,7 +187,13 @@ export default class FormatHelper extends Plugin {
         oldElement.replaceWith(newElement);
         // updateTransactionElement 定义在 Protyle 类实例上，而非内部 IProtyle 对象上，
         // 必须通过 getInstance() 获取类实例后调用，否则事务不会被提交
-        protyle.getInstance().updateTransactionElement(newElement, oldHTML);
+        try {
+            protyle.getInstance().updateTransactionElement(newElement, oldHTML);
+        } catch (error) {
+            // 提交失败时 DOM 已被替换，提示用户刷新核对，避免误以为已保存
+            console.error('submit transaction failed:', error);
+            showMessage(this.i18n.transactionFailed, undefined, 'error');
+        }
     }
 
     // NOTE - 移除空格

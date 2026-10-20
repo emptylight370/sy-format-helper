@@ -11,6 +11,7 @@
   "codeBlockOnlyFirst": "FormatHelper: Code Block only process first block",
   "codeBlockRmIndex": "Code Block remove indentation",
   "nothingChange": "FormatHelper: Nothing Changed",
+  "transactionFailed": "FormatHelper: Failed to submit transaction, please refresh the doc to verify",
   "textBlockAddSpace": "Add space",
   "needRefresh": "FormatHelper: Need refersh to show change",
   "textBlockUpperCase": "toUpperCase",

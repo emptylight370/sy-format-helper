@@ -11,6 +11,7 @@
   "codeBlockOnlyFirst": "格式助手：代码块仅处理第一个块",
   "codeBlockRmIndex": "代码块移除缩进",
   "nothingChange": "格式助手：未改变",
+  "transactionFailed": "格式助手：事务提交失败，请刷新文档核对结果",
   "textBlockAddSpace": "添加空格",
   "needRefresh": "格式助手：需要手动刷新来显示修改",
   "textBlockUpperCase": "字母转大写",
