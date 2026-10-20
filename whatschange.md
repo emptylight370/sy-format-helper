@@ -1,3 +1,9 @@
+## [0.6.1](https://github.com/emptylight370/sy-format-helper/compare/0.6.0...0.6.1) (2026-10-20)
+
+### 🐛 Bug Fixes | 问题修复
+
+- 修复修改没有持久化问题 ([eb343e6](https://github.com/emptylight370/sy-format-helper/commit/eb343e654d98d34d86c8a109443d087d14eed47e))
+
 ## [0.6.0](https://github.com/emptylight370/sy-format-helper/compare/0.5.0...0.6.0) (2026-10-16)
 
 ### 🐛 Bug Fixes | 问题修复
@@ -12,6 +18,7 @@
 
 - Reset actions ([3096ce4](https://github.com/emptylight370/sy-format-helper/commit/3096ce423ca4afabf85c29a3c6d01d5035c9ce7c))
 - declare devEngine ([6fe8a9b](https://github.com/emptylight370/sy-format-helper/commit/6fe8a9b47b5964fe7c842a47d76093dd2488e460))
+- **(fix)** 修复构建报错问题 ([413ca94](https://github.com/emptylight370/sy-format-helper/commit/413ca94d078c14a55626f76cee5926e12eedfbdb))
 
 ## [0.5.0](https://github.com/emptylight370/sy-format-helper/compare/0.4.8...0.5.0) (2026-06-28)
 
