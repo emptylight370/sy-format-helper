@@ -64,12 +64,12 @@ Wait a minute to refresh the layout, if your change doesn't loaded, you should r
 > Complete [changelog](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
 > Complete [commit history](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
+- v0.7.1
+  - Fix issue that some inline items are not correctly convert
 - v0.7.0
   - Refactor plugin
 - v0.6.1
   - Fix modify not persistent issue
-- v0.6.0
-  - Change call function, adapt to 3.8.8 removed function
 
 # Thanks
 

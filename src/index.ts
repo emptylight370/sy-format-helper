@@ -237,6 +237,30 @@ export default class FormatHelper extends Plugin {
                 .replace(/？/g, '?'),
     };
 
+    // 不参与文本变换的行内元素：行内代码/公式/备注/按键/引用等属于代码或派生内容
+    private readonly skippedInlineTypes = new Set([
+        'tag',
+        'inline-code',
+        'inline-math',
+        'inline-memo',
+        'kbd',
+        'block-ref',
+        'file-annotation-ref',
+    ]);
+
+    // 判断文本节点是否位于应跳过的行内元素内（data-type 为空格分隔的多值）
+    private isInSkippedInline(root: Element, node: Node): boolean {
+        let current = node.parentNode;
+        while (current && current !== root && current.nodeType === Node.ELEMENT_NODE) {
+            const dataType = (current as HTMLElement).getAttribute?.('data-type') || '';
+            if (dataType.split(' ').some((item) => this.skippedInlineTypes.has(item))) {
+                return true;
+            }
+            current = current.parentNode;
+        }
+        return false;
+    }
+
     // NOTE - 对解析后的块 DOM 应用文本变换，返回是否实际发生修改
     private applyTextTransform(doc: Document, type: string): boolean {
         const mapper = this.textMappers[type];
@@ -259,8 +283,8 @@ export default class FormatHelper extends Plugin {
             let node;
             while ((node = walker.nextNode())) {
                 const innerText = node.nodeValue;
-                // 跳过tag
-                if (!innerText || (node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                // 跳过行内代码、行内公式等不应被改写的行内元素
+                if (!innerText || this.isInSkippedInline(editable, node)) {
                     continue;
                 }
                 const mapped = mapper(innerText);

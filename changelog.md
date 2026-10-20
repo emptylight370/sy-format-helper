@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.1
+
+- 修复部分行内元素错误处理问题
+- Fix issue that some inline items are not correctly convert
+
 ## v0.7.0
 
 - 重构插件
