@@ -136,51 +136,30 @@ export default class FormatHelper extends Plugin {
         if (!dom || !dom.dom) {
             throw new Error(`getBlockDOM failed: ${blockId}`);
         }
-        const origin = { dom: dom.dom, id: dom.id };
+        const originDom = dom.dom;
         // 如果获取到的块id不对(看似不可能发生)
-        if (blockId !== origin.id) {
+        if (blockId !== dom.id) {
             showMessage(this.i18n.idWrong, undefined, 'error');
             return false;
         }
-        const transforms: Record<string, (dom: { dom: string; id: string }) => { dom: string; id: string }> = {
-            // 智能移除空格
-            remove: (d) => this.removeWriteSpace(d),
-            // 为数字和英文添加空格
-            space: (d) => this.addSpace(d),
-            // 全字母大写
-            upper: (d) => this.upperCase(d),
-            // 全字母小写
-            lower: (d) => this.lowerCase(d),
-            // 全角字符转半角字符
-            fullToHalf: (d) => this.toHalfChar(d),
-            // 半角字符转全角字符
-            halfToFull: (d) => this.toFullChar(d),
-            // 法律法规（章、节、条）后添加空格
-            law: (d) => this.lawAddSpace(d),
-            // 中文符号转英文符号
-            CNtoEN: (d) => this.CNtoEN(d),
-            // 英文符号转中文符号
-            ENtoCN: (d) => this.ENtoCN(d),
-        };
-        const transform = transforms[type];
-        if (!transform) {
+        // 仅解析一次内核 HTML，后续直接操作文档树，避免字符串的多次序列化/解析往返
+        const doc = new DOMParser().parseFromString(originDom, 'text/html');
+        if (!this.applyTextTransform(doc, type)) {
             return false;
         }
-        const updated = transform(dom);
-        if (!updated || updated.dom === origin.dom) {
+        const newBlockElement = doc.body.firstElementChild;
+        if (!newBlockElement) {
             return false;
         }
-        this.commitUpdatedBlock(protyle, blockId, updated.dom, origin.dom);
+        const newElement = document.importNode(newBlockElement, true) as HTMLElement;
+        this.commitUpdatedBlock(protyle, blockId, newElement, originDom);
         return true;
     }
 
-    // NOTE - 将修改后的块 HTML 替换进编辑器真实 DOM，并提交事务
-    private commitUpdatedBlock(protyle: IProtyle, blockId: string, newHTML: string, oldHTML: string) {
-        const template = document.createElement('template');
-        template.innerHTML = newHTML.trim();
-        const newElement = template.content.firstElementChild as HTMLElement;
+    // NOTE - 将修改后的块元素替换进编辑器真实 DOM，并提交事务
+    private commitUpdatedBlock(protyle: IProtyle, blockId: string, newElement: HTMLElement, oldHTML: string) {
         const oldElement = protyle.wysiwyg?.element.querySelector(`[data-node-id="${blockId}"]`);
-        if (!newElement || !oldElement) {
+        if (!oldElement) {
             showMessage(this.i18n.noParaFound, undefined, 'error');
             return;
         }
@@ -196,371 +175,102 @@ export default class FormatHelper extends Plugin {
         }
     }
 
-    // NOTE - 移除空格
-    private removeWriteSpace(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-        // console.log(blockElements);
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
+    // NOTE - 各文本变换规则：对块内每个文本节点应用一次映射
+    private readonly textMappers: Record<string, (text: string) => string> = {
+        // 智能移除空格（保留换行符）
+        remove: (text) =>
+            text
+                .replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, '')
+                .replace(/[ ]{2,}/g, ' ')
+                .trim(),
+        // 为数字和英文添加空格
+        space: (text) =>
+            text
+                .replace(/([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g, '$1 $2')
+                .replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, '$1 $2')
+                .trim(),
+        // 全字母大写
+        upper: (text) => text.toUpperCase(),
+        // 全字母小写
+        lower: (text) => text.toLowerCase(),
+        // 全角字符转半角字符
+        fullToHalf: (text) =>
+            text
+                .replace(/[\uff01-\uff5e]/g, (match) => String.fromCharCode(match.charCodeAt(0) - 0xfee0))
+                .replace(/\u3000/g, ' '),
+        // 半角字符转全角字符
+        halfToFull: (text) =>
+            text
+                .replace(/[\u0021-\u007e]/g, (match) => String.fromCharCode(match.charCodeAt(0) + 0xfee0))
+                .replace(/ /g, '\u3000'),
+        // 法律法规（章、节、条）后添加空格
+        law: (text) =>
+            text
+                .replace(/\u3000/g, ' ')
+                .replace(/(第.*?[编章节条])(?!\s)/g, '$1 ')
+                .trim(),
+        // 英文符号转中文符号
+        ENtoCN: (text) =>
+            text
+                .replace(/,/g, '，')
+                .replace(/\./g, '。')
+                .replace(/\(/g, '（')
+                .replace(/\)/g, '）')
+                .replace(/\[/g, '【')
+                .replace(/\]/g, '】')
+                .replace(/:/g, '：')
+                .replace(/;/g, '；')
+                .replace(/!/g, '！')
+                .replace(/\?/g, '？'),
+        // 中文符号转英文符号
+        CNtoEN: (text) =>
+            text
+                .replace(/，/g, ',')
+                .replace(/。/g, '.')
+                .replace(/（/g, '(')
+                .replace(/）/g, ')')
+                .replace(/【/g, '[')
+                .replace(/】/g, ']')
+                .replace(/：/g, ':')
+                .replace(/；/g, ';')
+                .replace(/！/g, '!')
+                .replace(/？/g, '?'),
+    };
+
+    // NOTE - 对解析后的块 DOM 应用文本变换，返回是否实际发生修改
+    private applyTextTransform(doc: Document, type: string): boolean {
+        const mapper = this.textMappers[type];
+        if (!mapper) {
+            return false;
         }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // console.log(innerText);
-                    // 去除文本中的多余空格，但保留换行符
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/(?<![a-zA-Z0-9])[ \t\f\v]+(?![a-zA-Z0-9])/g, '')
-                            .replace(/[ ]{2,}/g, ' ')
-                            .trim();
-                        // console.log(innerText);
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        // console.log(dom);
-
-        // 返回修改后的整个 DOM 文档
-        return dom;
-    }
-
-    // NOTE - 对数字英文添加空格
-    private addSpace(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 匹配数字和英文，添加空格
-                    if (innerText && !skip) {
-                        innerText = innerText.replace(/([^0-9a-zA-Z \t\f\v])([0-9a-zA-Z]+)/g, '$1 $2').trim();
-                        innerText = innerText.replace(/([0-9a-zA-Z]+)([^0-9a-zA-Z \t\f\v])/g, '$1 $2').trim();
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 英文全字母大写
-    private upperCase(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将文本内容转换为大写字母
-                    if (innerText && !skip) {
-                        innerText = innerText.toUpperCase();
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 英文全字母小写
-    private lowerCase(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将文本内容转换为小写字母
-                    if (innerText && !skip) {
-                        innerText = innerText.toLowerCase();
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 全角字符转换为半角字符
-    private toHalfChar(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将全角字符转换为半角字符
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/[\uff01-\uff5e]/g, function (match) {
-                                return String.fromCharCode(match.charCodeAt(0) - 0xfee0);
-                            })
-                            .replace(/\u3000/g, ' ');
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 半角字符转换为全角字符
-    private toFullChar(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将半角字符转换为全角字符
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/[\u0021-\u007e]/g, function (match) {
-                                return String.fromCharCode(match.charCodeAt(0) + 0xfee0);
-                            })
-                            .replace(/ /g, '\u3000');
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 法律法规（章、节、条）添加空格
-    private lawAddSpace(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
         const blockElements = doc.querySelectorAll('[data-node-id]');
         if (blockElements.length === 0) {
             console.warn('No block elements found.');
             showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
+            return false;
         }
+        let changed = false;
         blockElements.forEach((blockElement) => {
             const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 为章、节、条后添加空格
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/\u3000/g, ' ')
-                            .replace(/(第.*?[编章节条])(?!\s)/g, '$1 ')
-                            .trim();
-                        node.nodeValue = innerText;
-                    }
+            if (!editable) {
+                return;
+            }
+            const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
+            let node;
+            while ((node = walker.nextNode())) {
+                const innerText = node.nodeValue;
+                // 跳过tag
+                if (!innerText || (node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
+                    continue;
+                }
+                const mapped = mapper(innerText);
+                if (mapped !== innerText) {
+                    node.nodeValue = mapped;
+                    changed = true;
                 }
             }
         });
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 英文符号转中文符号
-    private ENtoCN(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将英文符号转换为中文符号
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/,/g, '，')
-                            .replace(/\./g, '。')
-                            .replace(/\(/g, '（')
-                            .replace(/\)/g, '）')
-                            .replace(/\[/g, '【')
-                            .replace(/\]/g, '】')
-                            .replace(/:/g, '：')
-                            .replace(/;/g, '；')
-                            .replace(/!/g, '！')
-                            .replace(/\?/g, '？');
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
-    }
-
-    // NOTE - 中文符号转英文符号
-    private CNtoEN(dom: { dom: string; id: string }) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(dom.dom, 'text/html');
-        const blockElements = doc.querySelectorAll('[data-node-id]');
-
-        if (blockElements.length === 0) {
-            console.warn('No block elements found.');
-            showMessage(this.i18n.noTextFound, undefined, 'error');
-            return dom;
-        }
-
-        blockElements.forEach((blockElement) => {
-            const editable = blockElement.querySelector('div[contenteditable=true]');
-            if (editable) {
-                const walker = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT, null);
-                let node;
-                while ((node = walker.nextNode())) {
-                    let innerText = node.nodeValue;
-                    let skip = false;
-                    // 跳过tag
-                    if ((node.parentNode as HTMLElement).getAttribute('data-type') == 'tag') {
-                        skip = true;
-                    }
-                    // 将中文符号转换为英文符号
-                    if (innerText && !skip) {
-                        innerText = innerText
-                            .replace(/，/g, ',')
-                            .replace(/。/g, '.')
-                            .replace(/（/g, '(')
-                            .replace(/）/g, ')')
-                            .replace(/【/g, '[')
-                            .replace(/】/g, ']')
-                            .replace(/：/g, ':')
-                            .replace(/；/g, ';')
-                            .replace(/！/g, '!')
-                            .replace(/？/g, '?');
-                        node.nodeValue = innerText;
-                    }
-                }
-            }
-        });
-
-        dom.dom = doc.body.innerHTML;
-        return dom;
+        return changed;
     }
     // !SECTION 处理文本操作====================<
 
