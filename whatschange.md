@@ -1,3 +1,9 @@
+## [0.7.1](https://github.com/emptylight370/sy-format-helper/compare/0.7.0...0.7.1) (2026-10-20)
+
+### 🐛 Bug Fixes | 问题修复
+
+- 部分行内元素错误转换 ([8e5c56c](https://github.com/emptylight370/sy-format-helper/commit/8e5c56cd18189087f5443dd191288435b94dd8b6))
+
 ## [0.7.0](https://github.com/emptylight370/sy-format-helper/compare/0.6.1...0.7.0) (2026-10-20)
 
 ### 🔨 Refactor | 重构
