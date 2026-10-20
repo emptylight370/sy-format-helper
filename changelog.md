@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.1
+
+- 修复修改没有持久化问题
+- Fix modify not persistent issue
+
 ## v0.6.0
 
 - 更换调用函数，适配3.8.8移除的函数

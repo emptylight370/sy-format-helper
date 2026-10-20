@@ -64,12 +64,12 @@
 > 完整[更新日志](https://github.com/emptylight370/sy-format-helper/blob/main/changelog.md)
 > 完整[提交记录](https://github.com/emptylight370/sy-format-helper/blob/main/whatschange.md)
 
+- v0.6.1
+  - 修复修改没有持久化问题
 - v0.6.0
   - 更换调用函数，适配3.8.8移除的函数
 - v0.5.0
   - 适配思源3.7.0
-- v0.4.8
-  - 实现中文英文符号互转功能
 
 # 感谢
 

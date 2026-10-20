@@ -238,13 +238,15 @@ export default class FormatHelper extends Plugin {
         const template = document.createElement('template');
         template.innerHTML = newHTML.trim();
         const newElement = template.content.firstElementChild as HTMLElement;
-        const oldElement = protyle.wysiwyg.element.querySelector(`[data-node-id="${blockId}"]`);
+        const oldElement = protyle.wysiwyg?.element.querySelector(`[data-node-id="${blockId}"]`);
         if (!newElement || !oldElement) {
             showMessage(this.i18n.noParaFound, undefined, 'error');
             return;
         }
         oldElement.replaceWith(newElement);
-        protyle.updateTransactionElement(newElement, oldHTML);
+        // updateTransactionElement 定义在 Protyle 类实例上，而非内部 IProtyle 对象上，
+        // 必须通过 getInstance() 获取类实例后调用，否则事务不会被提交
+        protyle.getInstance().updateTransactionElement(newElement, oldHTML);
     }
 
     // NOTE - 移除空格
