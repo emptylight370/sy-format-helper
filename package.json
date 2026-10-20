@@ -1,6 +1,6 @@
 {
   "name": "sy-format-helper",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "SiYuan format helper",
   "main": ".src/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=22.0.0"
+      "version": ">=24.0.0"
     },
     "packageManager": {
       "name": "pnpm",

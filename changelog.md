@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0
+
+- 重构插件
+- Refactor plugin
+
 ## v0.6.1
 
 - 修复修改没有持久化问题

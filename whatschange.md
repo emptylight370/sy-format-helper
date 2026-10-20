@@ -1,3 +1,10 @@
+## [0.7.0](https://github.com/emptylight370/sy-format-helper/compare/0.6.1...0.7.0) (2026-10-20)
+
+### 🔨 Refactor | 重构
+
+- 重构插件 ([985da8e](https://github.com/emptylight370/sy-format-helper/commit/985da8e86810cdf4ad761c57750e057d699545bc))
+- 重构转换部分 ([b379200](https://github.com/emptylight370/sy-format-helper/commit/b379200baf3926a2ee54d65d4d89f0b84ffe1a5c))
+
 ## [0.6.1](https://github.com/emptylight370/sy-format-helper/compare/0.6.0...0.6.1) (2026-10-20)
 
 ### 🐛 Bug Fixes | 问题修复

@@ -2,17 +2,11 @@
   "name": "sy-format-helper",
   "author": "Emptylight",
   "url": "https://github.com/emptylight370/sy-format-helper",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "minAppVersion": "3.7.0",
   "disabledInPublish": true,
-  "backends": [
-    "all"
-  ],
-  "frontends": [
-    "desktop",
-    "browser-desktop",
-    "desktop-window"
-  ],
+  "backends": ["all"],
+  "frontends": ["desktop", "browser-desktop", "desktop-window"],
   "displayName": {
     "default": "Format Helper",
     "zh-CN": "格式助手"
@@ -25,17 +19,13 @@
     "default": "README.md",
     "zh-CN": "README.zh-CN.md"
   },
+  "icon": "icon.png",
+  "preview": "preview.png",
   "funding": {
     "openCollective": "",
     "patreon": "",
     "github": "",
-    "custom": [
-      "https://blog.emptylight.cn/sponsor"
-    ]
+    "custom": ["https://blog.emptylight.cn/sponsor"]
   },
-  "keywords": [
-    "format",
-    "格式",
-    "Emptylight"
-  ]
+  "keywords": []
 }
