@@ -1,0 +1,36 @@
+{
+  "name": "sy-format-helper",
+  "url": "https://github.com/emptylight370/sy-format-helper",
+  "author": "Emptylight",
+  "backends": [
+    "all"
+  ],
+  "frontends": [
+    "desktop",
+    "browser-desktop",
+    "desktop-window"
+  ],
+  "disabledInPublish": true,
+  "readme": {
+    "default": "README.md",
+    "zh-CN": "README.zh-CN.md"
+  },
+  "funding": {
+    "custom": [
+      "https://blog.emptylight.cn/sponsor"
+    ]
+  },
+  "version": "0.7.3",
+  "minAppVersion": "3.7.0",
+  "displayName": {
+    "default": "Format Helper",
+    "zh-CN": "格式助手"
+  },
+  "description": {
+    "default": "Format the text block",
+    "zh-CN": "格式化文本块"
+  },
+  "keywords": [],
+  "icon": "icon.png",
+  "preview": "preview.png"
+}
