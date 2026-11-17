@@ -20,7 +20,7 @@
       "https://blog.emptylight.cn/sponsor"
     ]
   },
-  "version": "0.7.3",
+  "version": "0.8.0",
   "minAppVersion": "3.7.0",
   "displayName": {
     "default": "Format Helper",
